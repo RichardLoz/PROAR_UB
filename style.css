@@ -4,6 +4,23 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 15px;
+}
+
+header h1 {
+    font-size: 24px;
+    text-align:start;
+    font-weight: bold;
+}
+
+
+nav ul {
+
+    padding: 10px;
+}
+
+
 
 
 /* #menu {
