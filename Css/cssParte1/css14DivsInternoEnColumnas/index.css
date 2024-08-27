@@ -1,0 +1,137 @@
+*
+{
+    box-sizing: border-box;
+
+}
+
+h1{
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.padre
+{
+    background: skyblue;
+    display: flex;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    justify-content:left;
+
+}
+
+.hijo
+{
+    background: grey;
+    text-align: center;
+    width: calc(20% - 20px);
+    margin: 10px;
+    padding: 20px;
+}
+
+.hijo img {
+    max-width: 60%;
+    max-height: 60%;
+    margin: 5%;
+}
+
+.padre .uno
+{
+    background: grey;
+    text-align: center;
+    height: 700px;
+    width: 200px;
+    float: left;
+}
+
+.padre .dos
+{
+    width: 200px ;
+    height: 450px;
+}
+
+.padre .tres
+{
+    width: 200px ;
+    height: 300px;
+}
+
+.padre .cuatro
+{
+    width: 200px ;
+    height: 300px;
+    
+}
+
+.padre .cinco
+{
+    width: 200px ;
+    height: 300px;
+}
+.padre .seis
+{
+    background: grey;
+    text-align: center;
+    height: auto;
+    width: 200px;
+    margin: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    clear: both;
+}
+
+.padre .siete{
+    width: 200px ; 
+    height: 300px;
+}
+
+.padre .ocho{
+    width: 200px ;
+    height: 300px;
+}
+
+
+
+/* Media queries para ajustar el número de columnas */
+@media (max-width: 1280px) {
+    .hijo {
+        width: calc(25% - 20px); /* Cuatro elementos en una fila */
+    }
+}
+
+@media (max-width: 960px) {
+    .hijo {
+        width: calc(33.33% - 20px); /* Tres elementos en una fila */
+    }
+}
+
+@media (max-width: 768px) {
+    .hijo {
+        width: calc(50% - 20px); /* Dos elementos en una fila */
+    }
+}
+
+/* Cambiar el color cuando solo queda una fila */
+@media (max-width: 480px) {
+    .hijo {
+        width: calc(100% - 20px); /* Un elemento por fila */
+        background: rgb(137, 225, 36); /* Cambia el color de fondo de los divs */
+    }
+}
+
+
+/* Ajustes para ubicar los divs debajo de los divs 3, 4 y 5 */
+@media (max-width: 768px) {
+    .seis {
+        order: 3; /* Cambia el orden para que div 6 esté debajo de div 3 */
+    }
+
+    .siete {
+        order: 4; /* Cambia el orden para que div 7 esté debajo de div 4 */
+    }
+
+    .ocho {
+        order: 5; /* Cambia el orden para que div 8 esté debajo de div 5 */
+    }
+}

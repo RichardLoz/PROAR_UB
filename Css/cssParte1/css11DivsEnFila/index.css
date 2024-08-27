@@ -1,0 +1,88 @@
+*
+{
+    box-sizing: border-box;
+
+}
+
+.padre
+{
+    background: skyblue;
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;    
+}
+
+.hijo
+{
+    box-shadow: 16px 8px 2px rgba(0,0,0,0.3);
+    width: 170px;
+    height: 80px;
+    border-radius: 12px;
+    border: 1px solid black;
+    margin: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    float: left;
+}
+
+.uno{
+    background: linear-gradient(180deg,orange, white, pink);
+    padding: 20px;
+    justify-content: flex-start;
+}
+
+.dos
+{
+    background: radial-gradient(orange, white, rgb(44, 223, 247));
+    justify-content: center;
+}
+
+.tres
+{
+    background: linear-gradient(orange, white, pink);
+}
+
+.tres img{
+
+        width: 90%;
+        height: 100%;
+        margin: 5%;
+
+}
+
+
+.cuatro
+{
+    background: radial-gradient(orange, white, pink);
+    font-size: 10px;
+}
+
+.cuatro img {
+    width: 40%;
+    height: 100%;
+    margin: 20%;
+}
+
+.cinco
+{
+    background: linear-gradient(orange, white, pink);
+}
+
+.seis
+{
+    background: radial-gradient(orange, white, rgb(44, 223, 247));
+    justify-content: center;
+}
+
+p {
+    font-size: 24px;
+}
+.texto6{
+    text-align: center;
+    font-size: 28px;
+}

@@ -1,0 +1,57 @@
+
+body{
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+    box-sizing: border-box;
+    
+}
+h1{
+    font-size: 14px;
+}
+.principal{
+    width: 80%;
+    height: 100%;
+    background-color: rgb(70, 187, 226);
+    position: absolute;
+    margin: auto;
+    left: 10%;
+}
+
+.contenedor1{
+    position: absolute;
+    text-align:left;
+    background-color: rgb(39, 203, 143);
+    width: 30%;
+    height: 33%;
+    top: 10%;
+    left: 15%;
+    
+}
+.contenedor2{
+    position: absolute;
+    margin: auto;
+    text-align: left;
+    background-color: rgb(89, 149, 219);
+    width: 30%;
+    height: 33%;
+    top: 50%;
+    left: 50%;
+    transform: rotate(20deg);
+}
+
+.contenedor3{
+    position: absolute;
+    margin: auto;
+    text-align: left;
+    background-color: rgb(17, 114, 116);
+    width: 30%;
+    height: 33%;
+    top: 30%;
+    left: 35%;
+    opacity: .7;
+}
+img{
+    width: 35%;
+    height: 30%;
+}

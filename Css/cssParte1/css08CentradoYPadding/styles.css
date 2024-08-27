@@ -1,0 +1,35 @@
+*{
+	font-size: 20px;
+}
+
+h1{
+	font-size: 40px;
+	text-align: center;
+}
+
+#divArriba {
+	margin:auto; 
+	width:50%; 
+	background-color:lightblue;
+}
+
+
+#divMedio {
+	padding-left:10%;
+	margin:auto; 
+	width:60%; 
+	background-color:MediumSeaGreen;
+}
+
+#divAbajo {
+	padding-left: 8%;
+	box-sizing:border-box;
+	margin:auto; 
+	width:50%; 
+	background-color:rgb(121, 214, 84);
+}
+
+p {
+    margin: 0; 
+    padding: 0;
+}

@@ -1,0 +1,51 @@
+*{
+    background-color: blue;
+
+}
+.principal{
+    background-color: rgb(109, 136, 136);
+}
+div {
+    box-sizing: border-box;
+    background-color: aqua;
+    padding: 1%;
+    width: 80%;
+}
+
+.contenedor1 {
+    margin-left: 5%;
+    margin-top: 30px;
+    width: 30%;
+}
+
+.contenedor2 {
+    margin-left: 10%;
+    margin-top: 50px;
+    width: 40%;
+    background-color: brown;
+
+}
+
+.contenedor3{
+    margin-top: 20px;
+    width: 300px;
+    
+}
+
+img{
+    width: 100%;
+    height: 100%;
+}
+
+div.modal{
+    position: fixed;
+    z-index: 2;
+    top: 20%;
+    left: 20%;
+    width: 50%;
+    height: 250px;
+    background-color: blue;
+    color: blanchedalmond;
+    opacity: 0.5;
+    border-style: solid;
+}

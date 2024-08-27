@@ -1,0 +1,78 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.padre {
+    background: lightblue;
+    width: 80%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    background-color:bisque;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 20px;
+    border: 1px solid black;
+    border-radius: 6px;
+  
+}
+
+.btn:hover {
+    background-color:rgb(197, 44, 189);
+}
+
+.btn:active {
+    background-color:gray;
+    color:black;
+}
+
+.form {
+    margin-top:40px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form > input {
+    max-width: 150px;
+}
+
+.form > input:focus{
+    background-color: skyblue;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    margin-left: 6px;
+}
+
+.imagenes_motos {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    
+}
+
+.imagen {
+    border: solid 1px yellow;
+    transition: width 0.5s ease, height 0.5s ease; /* Añade la transición al ancho y alto */
+}
+
+
+
+.imagen:active {
+
+    width: 400%;
+    height: 300px;
+
+}
