@@ -1,0 +1,110 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+header
+{
+    background-color: skyblue;
+    text-align: center;
+    height: 70px;
+}
+
+.contenedor
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 80%;
+    width: 100%;
+    background: rgb(209, 204, 204);
+}
+
+form
+{
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+}
+
+label
+{
+    margin-bottom: 5px;
+    display: block;
+}
+
+.data
+{
+    text-align: left;
+    float: left;
+    border-style: solid;
+    border-color: gray;
+    border-width: 1px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+
+
+.data .lineal
+{
+    display: inline;
+}
+
+.control__btn
+{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: skyblue;
+   border-style: solid;
+}
+
+.control__btn .btn
+{
+    height: 45px;
+    width: 20%;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #AAAAAA;
+}
+
+footer
+{
+    text-align: center;
+    background-color:rgb(68, 143, 68);
+    height: 60px;
+    justify-content: center;
+}
+
+
+/* RWD */
+
+@media (min-width: 900px) {
+    .data {
+        width: 20%; /* Cinco columnas en pantallas grandes */
+    }
+}
+
+@media (min-width: 700px) and (max-width: 899px) {
+    .data {
+        width: 33.33%; /* Tres columnas en pantallas medianas */
+    }
+}
+
+@media (min-width: 500px) and (max-width: 699px) {
+    .data {
+        width: 50%; /* Dos columnas en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 499px) {
+    .data {
+        width: 100%; /* Una columna en pantallas muy pequeñas */
+    }
+}

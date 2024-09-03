@@ -1,0 +1,73 @@
+
+    html,
+    body {
+        color: white;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+    }
+
+    .container {
+        width: 90%;
+        height: 100%;
+        background-color: rgb(16, 46, 92);
+        margin: auto;
+        box-sizing: border-box;
+    }
+    header,
+    footer {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(20, 212, 20, 0.808);
+        padding: 1%;
+        font-size: 50px;
+        box-sizing: border-box;
+    }
+
+    .principal {
+        height: 80%;
+        width: 100%;
+        display: flex;
+        box-sizing: border-box;
+    }
+    
+    .opciones {
+        float: left;
+        background-color: rgba(53, 124, 20, 0.685);
+        height: 100%;
+        width: 10%;
+        padding: 1em;
+        box-sizing: border-box;
+        display: block;
+
+    }
+
+    .textos{
+        float: left;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        padding: 2em;
+        box-sizing: border-box;
+    }
+
+    .botones {
+        padding: 20px;
+        background-color: rgba(110, 40, 168, 0.692);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+    }
+    .botones:hover{
+        background-color: rgba(204, 18, 18, 0.856);
+    }
+    .vacio {
+        clear: both;
+    }
