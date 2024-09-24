@@ -119,5 +119,5 @@ $('#vaciarDatos').on("click", function() {
 
 // Evento para cargar el formulario
 $('#cargarFormulario').on("click", function() {
-  window.location.href = '/Especiales/esp05FormVariableArregloDeObjetos/index.html';  // Cambia './formulario.html' a la ruta donde esté el formulario
+  window.location.href = '/Especiales/esp05FormVariableArregloDeObjetos/index.html';  
 })
