@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Form Variable Arreglo Objetos</title>
+</head>
+<script src="../recursos/jquery.js"></script>
+<script src="./script.js"></script>
+<body>
+    <header>
+        <h1>Formulario de ALTA - Producto nuevo</h1>
+    </header>
+
+    <form action="respuesta.html" method="get" id="formularioMoto">
+        <label for="marca">Marca:</label>
+        <select name="Marcas" id="marca"></select>
+
+        <label for="modelo">Modelo:</label>
+        <input type="text" id="modelo" name="modelo" required><br>
+
+        <label for="cilindrada">Cilindrada (cc):</label>
+        <input type="number" id="cilindrada" name="cilindrada" required><br>
+
+        <label for="velocidad_maxima">Velocidad Máxima (km/h):</label>
+        <input type="number" id="velocidad_maxima" name="velocidad_maxima" required><br>
+
+        <label for="inyeccion">Inyección:</label>
+        <input type="checkbox" id="inyeccion" name="inyeccion"><br>
+
+        <label for="fecha_lanzamiento">Fecha de Lanzamiento:</label>
+        <input type="date" id="fecha_lanzamiento" name="fecha_lanzamiento" required><br>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+
+
+    <footer>
+        <p>© 2024 Taller de motos - Rlozano - </p>
+    </footer>
+
+
+</body>
+</html>

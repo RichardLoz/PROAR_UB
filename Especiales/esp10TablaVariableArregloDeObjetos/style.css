@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+.buttons {
+    text-align: center;
+    margin-top: 10px;
+}
+
+button {
+    padding: 5px 10px;
+    margin: 5px;
+    font-size: 16px;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Agrega un scrollbar horizontal si es necesario */
+    margin: 20px 0;
+    max-height: 800px; /* Establece una altura máxima para el contenedor */
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+tbody {
+    display: block; /* Hace que el tbody sea un bloque, necesario para el scrollbar vertical */
+    max-height: 100%; /* Establece una altura máxima para el tbody */
+    overflow-y: auto; /* Agrega un scrollbar vertical si el contenido es demasiado grande */
+}
+
+tr {
+    display: table; /* Hace que las filas sean elementos de tabla para alinear correctamente las celdas */
+    table-layout: fixed; /* Fuerza una distribución uniforme de las celdas */
+    width: 100%;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #cb5c5c;
+}
+
+th {
+    background-color: #41ae46;
+}
+
+tr:nth-child(even) {
+    background-color: #94b797; 
+}
+
+tr:nth-child(odd) {
+    background-color: #787b94; 
+}
+
+footer {
+    text-align: center;
+    background-color: #bf9494;
+    padding: 10px;
+}
+
+
+@media(max-width:1200px) {
+    [dataTabla='cod'] {
+        display: none;
+    }
+}
+
+@media(max-width:900px) {
+    [dataTabla='marca'] {
+        display: none;
+    }
+}
+
+@media(max-width:700px) {
+    [dataTabla='cilindrada'] {
+        display: none;
+    }
+}

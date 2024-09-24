@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Tabla Formulario Objetos</title>
+</head>
+<body>
+    <h1>Listado de Motos</h1>
+    <div class="buttons">
+        <button id="cargarDatos">Cargar Datos</button>
+        <button id="vaciarDatos">Vaciar Datos</button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th dataTabla='cod'>CodMoto</th>
+                    <th dataTabla='marca'>Marca</th>
+                    <th dataTabla='modelo'>Modelo</th>
+                    <th dataTabla='cilindrada'>Cilindrada</th>
+                    <th dataTabla='velocidad_maxima'>Velocidad Máxima</th>
+                    <th dataTabla='inyeccion'>Inyección</th>
+                    <th dataTabla='fecha_lanzamiento'>Fecha de Lanzamiento</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        Pie de página de la tabla
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../recursos/productos.js"></script>
+</body>
+</html>
