@@ -10,7 +10,7 @@ echo "<html>
     <p class='bold-text'>Nombre: $nombre</p>
     <p class='bold-text'>Apellido: $apellido</p>
     <div class='button-container'>
-      <form action='index.php'>
+      <form action='ejer10Formulario.php'>
         <input type='submit' value='Volver' class='button'>
       </form>
     </div>

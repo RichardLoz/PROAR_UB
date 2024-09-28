@@ -1,5 +1,5 @@
 <?php 
-include ("./include.php");
+require ("./require.php");
 
 echo "Valor de una variable incluida desde otro archivo: ". $numeroEjemplo;
 echo "<br><br>";
