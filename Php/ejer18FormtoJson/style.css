@@ -1,0 +1,21 @@
+.resaltado
+{
+    color: blue;
+}
+
+table
+{
+    border-collapse: collapse;
+    margin: 25px;
+    border: 2px solid black;
+}
+
+tbody
+{
+    background-color: skyblue;
+}
+
+td
+{
+    border: 1px solid black;
+}

@@ -1,0 +1,96 @@
+/* Estilos para el encabezado */
+header {
+    text-align: center;
+    margin: 20px;
+}
+
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Alinea los elementos en la dirección horizontal (izquierda y derecha)*/
+    align-items: center; 
+}
+
+.input-button-container {
+    display: flex;
+    align-items: center;
+}
+
+
+label {
+    margin-right: 10px;
+}
+
+input {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.table-container {
+    max-height: 790px; /* Establece la altura máxima del contenedor y ajusta según tu preferencia */
+    overflow-y: auto; /* Agrega la barra de desplazamiento vertical al contenedor */
+}
+
+/* Estilos para la tabla */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead th {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+thead th input {
+    width: 100%;
+    padding: 5px;
+}
+
+tbody td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+tfoot td {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Agregar espacio entre thead y tfoot */
+thead::after {
+    content: "";
+    display: block;
+    height: 10px; /* Ajusta la altura según tu preferencia */
+}
+
+/* Estilos para el footer */
+footer {
+    text-align: left;
+    margin: 20px;
+}
+
