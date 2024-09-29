@@ -1,8 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio02Inclusion</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
 <?php 
+
 include ("./include.php");
 
-echo "Valor de una variable incluida desde otro archivo: ". $numeroEjemplo;
-echo "<br><br>";
+echo "<h3>Valor de una variable incluida desde otro archivo: ". $numeroEjemplo . "</h3>";
 echo "<table border='1'>";
 echo "<tr>";
 $contarProfesores = count($profesores);
@@ -15,7 +25,9 @@ for ($i = 0; $i < $contarProfesores; $i++) {
     }
     echo "</tr>";
 }
-echo "</table><br>";
+echo "</table>";
 
-echo "La longitud del arreglo es de:  ". $contarProfesores; 
+echo "<h4>La longitud del arreglo es de:  ". $contarProfesores . "</h4>"; 
 ?>
+</body>
+</html>

@@ -1,6 +1,6 @@
 <?php
-$nombre = $_POST["nombre"];
-$apellido = $_POST["apellido"];
+$nombre = $_GET["nombre"];
+$apellido = $_GET["apellido"];
 echo "<html>
 <head>
     <link rel='stylesheet' type='text/css' href='style.css'>
@@ -10,9 +10,7 @@ echo "<html>
     <p class='bold-text'>Nombre: $nombre</p>
     <p class='bold-text'>Apellido: $apellido</p>
     <div class='button-container'>
-      <form action='ejer10Formulario.php'>
-        <input type='submit' value='Volver' class='button'>
-      </form>
+      <a href='ejer10Formulario.html' class='button'>Volver</a>
     </div>
   </div>
 </body>
