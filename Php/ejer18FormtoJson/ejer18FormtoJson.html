@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Alta de Siniestro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Alta de Siniestro</h1>
+    </header>
+    <div class="container">
+        <button class="abrir">Alta Siniestro</button>
+        <dialog class="modal">
+            <div class="primero"><button class="cerrar">X</button></div>
+            <div class="segundo">
+                <label for="nombre">Nombre:</label><br>
+                <input type="text" name="nombre" id="nombre" required><br>
+                <label for="apellido">Apellido:</label><br>
+                <input type="text" name="apellido" id="apellido" required><br>
+                <label for="edad">Edad:</label><br>
+                <input type="number" name="edad" id="edad" required><br>
+                <label for="seguro">Seguro:</label><br>
+                <select name="seguro" id="seguro" required>
+                    <option value="Sura">Sura</option>
+                    <option value="Orbis">Orbis</option>
+                    <option value="La Segunda">La Segunda</option>
+                    <option value="UB Seguros">UB Seguros</option>
+                </select><br>
+                <label for="fecha_siniestro">Fecha de Siniestro:</label><br>
+                <input type="date" name="fecha_siniestro" id="fecha_siniestro" required><br><br><br>
+                <button class="enviar">Enviar</button>
+                <div class="procesar"></div>
+            </div>
+        </dialog>
+    </div>
+    <footer>
+        <h1>Alumno: Ricardo Lozano</h1>
+    </footer>
+
+    <script>
+        const Modal = document.querySelector(".modal")
+        const Abrirmodal = document.querySelector(".abrir")
+        const Cerrarmodal = document.querySelector(".cerrar")
+
+        Abrirmodal.addEventListener("click", () => {
+            Modal.showModal();
+        })
+        Cerrarmodal.addEventListener("click", () => {
+            $(".procesar").empty();
+            $("#nombre").val("");
+            $("#apellido").val("");
+            $("#edad").val("");
+            $("#seguro").val("");
+            $("#fecha_siniestro").val("");
+            Modal.close();
+
+        });
+
+
+        $(".enviar").click(function () {
+            if (confirm("Desea enviar estos datos?")) {
+                $(".procesar").empty(); //vacia el cuadro de procesar.
+                $(".procesar").addClass("estiloRecibiendo"); //le cambia provisorio de estilo del contenedor
+                $(".procesar").html("<h1>Esperando respuesta ..</h1>");//Escribe mensaje provisorio
+                $.ajax({
+                    type: "post",
+                    url: "./index.php",
+                    data: { 
+                        nombre: $("#nombre").val(), 
+                        apellido: $("#apellido").val(), 
+                        edad: $("#edad").val(), 
+                        seguro: $("#seguro").val(),
+                        fecha_siniestro: $("#fecha_siniestro").val() 
+                    },
+                    success: function (respuestaDelServer) {
+                        $(".procesar").removeClass("estiloRecibiendo");
+                        $(".procesar").html("<h1>Resultado de la transformacion a JSON en el servidor: </h1><br><h2>" + respuestaDelServer + "</h2>");
+                    }
+                }); //cierra ajax
+            } else {
+                $(".procesar").empty();
+                $("#nombre").val("");
+                $("#apellido").val("");
+                $("#edad").val("");
+                $("#seguro").val("");
+                $("#fecha_siniestro").val("");
+            };
+        });
+    </script>
+</body>
+
+</html>

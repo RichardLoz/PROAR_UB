@@ -1,21 +1,114 @@
-.resaltado
-{
-    color: blue;
+/* Reset general */
+body, html {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Eliminamos el scroll */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212; /* Fondo oscuro */
+    color: #E0E0E0; /* Texto claro */
 }
 
-table
-{
-    border-collapse: collapse;
-    margin: 25px;
-    border: 2px solid black;
+/* Ajuste del modal para que no genere scroll */
+.modal {
+    border-radius: 10px;
+    height: 70vh; /* Ajuste del alto relativo a la pantalla */
+    width: 50vw; /* Ajuste del ancho relativo a la pantalla */
+    background-color: #333333; /* Fondo modal oscuro */
+    color: #ffffff;
+    padding: 20px;
+    box-sizing: border-box;
+    max-height: 90vh; /* Limitar el alto para evitar scroll */
+    overflow: auto; /* Evitar el overflow interno */
 }
 
-tbody
-{
-    background-color: skyblue;
+/* Estilo del backdrop */
+.modal::backdrop {
+    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro con opacidad */
 }
 
-td
-{
-    border: 1px solid black;
+/* Estilo del header y footer */
+header, footer {
+    width: 100%;
+    padding: 15px;
+    background-color: #1F1F1F; /* Color de fondo más oscuro */
+    text-align: center;
+    color: #64FFDA; /* Color de texto verde */
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; /* Ajuste para centrar */
+}
+
+/* Botón de abrir modal */
+.abrir {
+    padding: 10px 20px;
+    background-color: #64FFDA; /* Botón con color verde */
+    color: #1F1F1F;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.abrir:hover {
+    background-color: #52e3c2; /* Efecto hover */
+}
+
+/* Botón de cerrar modal */
+.cerrar {
+    padding: 5px 10px;
+    background-color: transparent;
+    color: #FF5252; /* Color rojo para cerrar */
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Estilo de los inputs */
+input, select {
+    width: calc(100% - 20px); /* Ajuste para evitar overflow */
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #2C2C2C; /* Fondo de los inputs */
+    color: #E0E0E0;
+}
+
+/* Estilo del botón enviar */
+.enviar {
+    padding: 10px 15px;
+    background-color: #64FFDA;
+    color: #1F1F1F;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.enviar:hover {
+    background-color: #52e3c2; /* Efecto hover */
+}
+
+/* Estilo del contenedor de procesamiento */
+.procesar {
+    font-size: 10px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #1F1F1F;
+    border: 1px solid #64FFDA;
+    border-radius: 5px;
+}
+
+/* Ajuste de estilos para etiquetas */
+label {
+    font-size: 16px;
+    margin: 5px 0;
 }

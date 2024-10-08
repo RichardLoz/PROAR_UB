@@ -1,21 +1,89 @@
-.resaltado
-{
-    color: blue;
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #121212; 
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #e0e0e0;
 }
 
-table
-{
-    border-collapse: collapse;
-    margin: 25px;
-    border: 2px solid black;
+.container {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: #1e1e1e; 
+    color: #e0e0e0;
+    width: 90%; 
+    height: 80vh;
+    margin: 5vh auto; 
+    padding: 1.5em; 
+    border-radius: 15px; 
+    overflow: hidden; 
 }
 
-tbody
-{
-    background-color: skyblue;
+.entrada {
+    background-color: #243c3c; 
+    padding: 1.5em;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #555; 
+    height: 45vh; 
 }
 
-td
-{
-    border: 1px solid black;
+input {
+    padding: 1em;
+    border-radius: 1em;
+    font-size: 20px;
+    background-color: #3a3a3a; 
+    border: 1px solid #666; 
+    color: #e0e0e0; 
 }
+
+.encriptar {
+    text-align: center;
+    background-color: #3e1616; 
+    padding: 1.5em;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #555; 
+    height: 45vh; 
+}
+
+#imgEncrypt {
+    width: 100px; 
+    height: 100px;
+    cursor: pointer;
+    transition: transform 0.2s ease; 
+}
+
+#imgEncrypt:hover {
+    transform: scale(1.1); 
+}
+
+.resultado {
+    background-color: #855c3b; 
+    padding: 1.5em;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #555; 
+    height: 45vh; /* Ajuste de altura */
+}
+
+.estado {
+    background-color: #480786; 
+    padding: 1.5em;
+    height: 20vh; 
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #555; 
+    grid-column: span 3; /* Ocupa todo el ancho del contenedor */
+}
+
+#BotonDisparador {
+    display: none;
+}
+
+.encriptar:hover #BotonDisparador {
+    display: inline-block;
+}
+

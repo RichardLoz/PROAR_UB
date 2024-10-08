@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>ejer17Ajax</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="entrada" id="entrada">
+            <h1>Datos de entrada :</h1><br>
+            <input type="text" name="clave" id="clave" placeholder="Ingrese su clave aquí" required>
+        </div>
+        <div class="encriptar" id="encriptar">
+            <h1>Encriptar :</h1>
+            <button id="BotonDisparador"><img src="./password.gif" id="imgEncrypt" alt="Encrypt"></button>
+        </div>
+        <div class="resultado" id="resultado">
+            <h1>Resultado :</h1>
+        </div>
+        <div class="estado" id="estado">
+            <h1>Estado del requerimiento :</h1>
+        </div>
+    </div>
+
+    <script>
+        $("#BotonDisparador").click(function() {
+            $("#resultado").empty(); // Vacía el cuadro de resultado.
+            $("#resultado").addClass("estiloRecibiendo"); // Cambia el estilo del contenedor temporalmente.
+            $("#resultado").html("<h1>Esperando respuesta ..</h1>"); // Mensaje provisorio.
+            $("#estado").empty(); // Vacía el div que indica el estado del requerimiento.
+            $("#estado").append("<h1>Estado del requerimiento: In Progress</h1>"); // Estado en progreso.
+
+            $.ajax({
+                type: "post",
+                url: "./index.php",
+                data: { clave: $("#clave").val() },
+                success: function(respuestaDelServer, estado) {
+                    $("#resultado").removeClass("estiloRecibiendo");
+                    $("#resultado").html("<h1>Resultado: </h1><h2>" + respuestaDelServer + "</h2>");
+                    $("#estado").empty(); // Limpia el estado anterior.
+                    $("#estado").append("<h1>Estado del requerimiento: success</h1>");
+                },
+                error: function() {
+                    $("#estado").empty(); // Limpia el estado anterior.
+                    $("#estado").append("<h1>Estado del requerimiento: error</h1>");
+                }
+            }); // Cierra ajax
+        });
+    </script>
+    
+</body>
+</html>
