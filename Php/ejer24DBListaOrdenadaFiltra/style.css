@@ -8,133 +8,318 @@ body,
 html {
     height: 100%;
     width: 100%;
-    background-color: rgb(67, 65, 65);
+    background-color: #121212;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #E0E0E0;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: hidden; /* Evitar scroll en toda la página */
+}
+
+.head h3 {
+    text-align: center;
+    text-decoration: underline;
+    font-size: 2.5em;
+    margin: 0;
+    line-height: 1.2;
+    color: #E0E0E0;
+}
+
+/* Ajustar la distribución de los elementos en el header */
+.command {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrar elementos horizontalmente */
+    gap: 15px; /* Separar elementos */
+    padding: 20px;
+}
+
+.command input {
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 5px;
+    background-color: #1C1C1C;
+    color: #E0E0E0;
+    border: 1px solid #333;
+}
+
+.command button {
+    padding: 10px;
+    background-color: #282828;
+    color: #E0E0E0;
+    border: none;
+    font-size: 1em;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.command button:hover {
+    background-color: #333;
+    cursor: pointer;
 }
 
 .head {
-    color: white;
-    font-size: 2em;
-    padding: 0.5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    border-bottom: 1px solid black;
-    box-sizing: border-box;
-    background-color: rgb(34, 33, 33);
-    height: 15%;
-    
+    padding: 20px 0;
+    background-color: #1C1C1C;
+    border-bottom: 1px solid #333;
 }
-header,footer{
-    box-sizing: border-box;
-    height: 10%;
-    background-color: rgb(34, 33, 33);
-    
+
+header,
+footer {
+    height: auto;
+    background-color: #1C1C1C;
 }
-.command {
-    box-sizing: border-box;
-    float: right;
-}
-footer{
-    color: white;
+
+footer {
+    color: #E0E0E0;
     text-align: center;
-
-}
-button:hover {
-    cursor: pointer;
-    background-color: rgb(43, 42, 42);
+    font-size: 1em;
+    padding: 10px;
 }
 
-button{
-    padding: 1em;
-    width: 200px;
-    background-color: rgb(67, 65, 65);
-    color: white;
-    border: none;
-    font-size: 15px;
-    border-left: 1px solid rgb(0, 0, 0);
-    font-weight: bold;
- }
-table{
-    height: 80%;
-    overflow: auto;
+/* Ajustar la tabla para que se alinee correctamente */
+table {
     width: 100%;
-    display: block;
+    max-width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 20px 0;
+    height: calc(100vh - 300px); /* Ocupa el espacio disponible entre el header y el footer */
 }
-thead>tr {
-    background-color: rgb(18, 110, 73);
-    border: 1px solid grey;
+
+thead {
+    background-color: #1C1C1C;
+    color: #E0E0E0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+thead th {
+    padding: 15px;
+    border-bottom: 2px solid #333;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1.1em;
 }
 
 tbody {
-    background-color: rgb(49, 40, 59);
-    overflow: scroll;
-    height: 80%;
-    box-sizing: border-box;
-    display: block;
+    display: block; /* Hacemos que el tbody sea un bloque para controlar su altura */
+    height: 300px; /* Fijamos la altura del tbody para habilitar el scroll interno */
+    overflow-y: scroll; /* Permitimos el desplazamiento vertical solo dentro del tbody */
+    background-color: #121212;
 }
 
-tbody tr:nth-child(odd) {
-    background: rgb(97, 89, 89);
+tbody tr {
+    display: table; /* Los tr siguen comportándose como filas de tabla */
+    width: 100%; /* Aseguramos que las filas ocupen el 100% del ancho de la tabla */
+    table-layout: fixed; /* Mantener las celdas con un ancho fijo */
 }
 
-th,
-td {
-    padding: 1vh;
-    color: beige;
+tbody td {
+    padding: 15px;
+    color: #E0E0E0;
+    text-align: left;
+    border-bottom: 1px solid #333;
+    white-space: nowrap; /* Evitar que el texto se corte */
+    overflow: hidden; /* Evitar desbordamiento de contenido */
+    text-overflow: ellipsis; /* Mostrar puntos suspensivos si el contenido es muy largo */
+}
+
+tfoot {
+    background-color: #1C1C1C;
+    color: #E0E0E0;
+    font-weight: 600;
     text-align: center;
+    padding: 15px;
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
 }
 
-thead{
-    width: 100%;
-    display: inline-block;
-    overflow: auto;
+thead, tfoot {
+    display: table; /* Aseguramos que thead y tfoot se comporten como partes normales de la tabla */
+    width: 100%; /* Aseguramos que ocupen el 100% del ancho de la tabla */
+}
+
+/* Modernizar los botones de la tabla */
+button {
+    background-color: #333;
+    color: #E0E0E0;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+    color: #FFF;
+}
+
+select,
+input {
+    background-color: #1C1C1C;
+    color: #E0E0E0;
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+select:focus,
+input:focus {
+    outline: none;
+    border: 1px solid #00FFB2;
+}
+
+.loader {
+    width: 175px;
+    height: 80px;
+    display: block;
+    margin: auto;
+    background-image: radial-gradient(circle 25px at 25px 25px, #FFF 100%, transparent 0), radial-gradient(circle 50px at 50px 50px, #FFF 100%, transparent 0), radial-gradient(circle 25px at 25px 25px, #FFF 100%, transparent 0), linear-gradient(#FFF 50px, transparent 0);
+    background-size: 50px 50px, 100px 76px, 50px 50px, 120px 40px;
+    background-position: 0px 30px, 37px 0px, 122px 30px, 25px 40px;
+    background-repeat: no-repeat;
+    position: relative;
     box-sizing: border-box;
-}
-select,input{
-    padding: 1vh;
-}
-select{
-    padding: 2vh;
-}
+  }
+  .loader::after {
+    content: '';  
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 0);
+    position: absolute;
+    border: 15px solid transparent;
+    border-top-color: #FF3D00;
+    box-sizing: border-box;
+    animation: fadePush 1s linear infinite;
+  }
+  .loader::before {
+    content: '';  
+    left: 50%;
+    bottom: 30px;
+    transform: translate(-50%, 0);
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #FF3D00;
+    box-sizing: border-box;
+    animation: fadePush 1s linear infinite;
+  }
+  
+  @keyframes fadePush {
+    0% {
+      transform: translate(-50%, -15px);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(-50%, 0px);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, 15px);
+      opacity: 0;
+    }
+  }
 
-@media (max-width:600px){
-    .head{
-        height: 20%;
-        display: flex;
-    };
-    .command{
-        margin-left: 20%;
-        display: grid;
+  @media (max-width: 768px) {
+    /* Ajuste para pantallas pequeñas como tablets */
+    .head h3 {
+        font-size: 1.8em;
+    }
+
+    .command {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 10px; /* Reducir el espacio entre los elementos */
+        padding: 10px;
+    }
+
+    .command p {
+        margin-bottom: 5px;
+    }
+
+    .command input, .command button, .command select {
+        width: 100%; /* Hacer que los inputs y botones ocupen el 100% en pantallas pequeñas */
+        font-size: 0.9em; /* Reducir el tamaño de fuente */
+        padding: 8px;
+    }
+
+    /* Ajustar los botones de la tabla para que se adapten mejor en pantallas pequeñas */
+    thead th button {
+        font-size: 0.9em;
+        padding: 8px 10px;
+    }
+
+    table {
+        width: 100%;
+        overflow-x: auto; /* Scroll horizontal en caso de que la tabla sea más ancha que la pantalla */
+    }
+
+    tbody {
+        height: 250px; /* Reducir un poco el tamaño del tbody */
+    }
+
+    /* Ajustes para las celdas en pantallas más pequeñas */
+    tbody td, thead th {
+        font-size: 0.9em; /* Reducir el tamaño de las fuentes en las celdas */
+        padding: 10px;
+    }
+
+    footer {
+        font-size: 0.8em; /* Ajustar tamaño del footer */
+        padding: 5px;
     }
 }
-tfoot{
-    position: relative;
-    overflow: auto;
-    display: block;
-    
-}
-select{
-    padding: 2vh;
-}
-[campo-dato='id'] {
-    width: 5%;
-}
-[campo-dato='marca'] {
-    width: 5%;
-}
-[campo-dato='modelo'] {
-    width: 5%;
-}
-[campo-dato='color'] {
-    width: 5%;
-}
-[campo-dato='cilindrada'] {
-    width: 5%;
-}
-[campo-dato='fecha'] {
-    width: 5%;
-}
-[campo-dato='png'] {
-    width: 5%;
+
+@media (max-width: 480px) {
+    /* Ajuste para pantallas muy pequeñas como teléfonos móviles */
+    .head h3 {
+        font-size: 1.5em; /* Reducir más el tamaño del título */
+    }
+
+    .command {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 10px;
+    }
+
+    .command input, .command button, .command select {
+        font-size: 0.8em;
+        padding: 6px;
+    }
+
+    /* Tamaño más compacto de los botones de la tabla */
+    thead th button {
+        font-size: 0.8em;
+        padding: 6px 8px;
+    }
+
+    table {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    tbody td, thead th {
+        font-size: 0.8em;
+        padding: 8px;
+    }
+
+    footer {
+        font-size: 0.7em; /* Ajustar tamaño del footer */
+        padding: 5px;
+    }
+
+    tbody {
+        height: 200px; /* Ajustar la altura del tbody */
+    }
 }
