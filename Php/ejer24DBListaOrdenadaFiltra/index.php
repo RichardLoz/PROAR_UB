@@ -67,7 +67,7 @@
                 select.empty();
                 select.append('<option value="">Selecciona</option>');
                 generosJson.generos.forEach(function (item) {
-                    select.append('<option value="' + item.genero_id + '">' + item.nombre + '</option>');
+                    select.append('<option value="' + item.id + '">' + item.genero + '</option>');
                 });
             }
         })
@@ -95,11 +95,11 @@
                 objJson.canciones.forEach(function (cancion) {
                     var row = document.createElement("tr");
                     row.innerHTML = `
-                    <td campo-dato='id'> ${cancion.ID} </td>
-                    <td campo-dato='nombre'> ${cancion.nombre} </td>
-                    <td campo-dato='genero_id'> ${cancion.genero_nombre} </td>
-                    <td campo-dato='artista'> ${cancion.artista} </td>
-                    <td campo-dato='fecha_estreno'> ${cancion.fecha_estreno} </td>`;
+                    <td campo-dato='id'> ${cancion.Id} </td>
+                    <td campo-dato='nombre'> ${cancion.Nombre} </td>
+                    <td campo-dato='genero'> ${cancion.Genero} </td>
+                    <td campo-dato='artista'> ${cancion.Artista} </td>
+                    <td campo-dato='fecha_estreno'> ${cancion.Fecha} </td>`;
                     $("#tbDatos").append(row);
                 });
                 $("#totalRegistros").html("Nro de registros: " + objJson.canciones.length);

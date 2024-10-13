@@ -22,14 +22,16 @@ $filterArtista = '%' . $_GET['filterArtista'] . '%';
 $filterFecha = '%' . $_GET['filterFecha'] . '%';
 
 try {
-    // Consulta SQL que utiliza filtros para la tabla 'Canciones' (sin JOIN)
-    $sql = "SELECT * FROM canciones 
+    // Consulta SQL con LEFT JOIN para incluir los géneros, aunque no haya coincidencia
+    $sql = "SELECT c.ID, c.nombre, IFNULL(g.genero, 'Sin género') as genero, c.artista, c.fecha_estreno
+            FROM canciones c
+            LEFT JOIN generos g ON c.genero_id = g.id_genero
             WHERE 
-                (ID LIKE :ID) AND 
-                (nombre LIKE :Nombre) AND
-                (genero_id LIKE :Genero) AND 
-                (artista LIKE :Artista) AND 
-                (fecha_estreno LIKE :Fecha)
+                (c.ID LIKE :ID) AND 
+                (c.nombre LIKE :Nombre) AND
+                (g.genero LIKE :Genero OR g.genero IS NULL) AND 
+                (c.artista LIKE :Artista) AND 
+                (c.fecha_estreno LIKE :Fecha)
             ORDER BY " . $orden;
 
     $stmt2 = $dbh->prepare($sql);
@@ -50,7 +52,7 @@ try {
         $objCancion = new stdClass();
         $objCancion->Id = $fila['ID'];
         $objCancion->Nombre = $fila['nombre'];
-        $objCancion->Genero = $fila['genero_id'];  // Aquí se devuelve el ID del género, no el nombre
+        $objCancion->Genero = $fila['genero'];  // Nombre del género o 'Sin género'
         $objCancion->Artista = $fila['artista'];
         $objCancion->Fecha = $fila['fecha_estreno'];
         array_push($canciones, $objCancion);

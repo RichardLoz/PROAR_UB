@@ -1,13 +1,10 @@
 <?php
-$dbname="u182626001_PROAR_Rlozano";
-$host="rilozano.com";
-$user="u182626001_rlozano";
-$password="Misoas2021";
+include ("./db.php");
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT genero FROM Generos";
+    $sql = "SELECT id_genero, genero FROM generos";
     $stmt = $conn->prepare($sql);
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $stmt->execute();
