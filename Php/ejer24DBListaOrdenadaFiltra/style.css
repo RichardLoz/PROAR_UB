@@ -1,0 +1,140 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(67, 65, 65);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.head {
+    color: white;
+    font-size: 2em;
+    padding: 0.5vh;
+    width: 100%;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+    background-color: rgb(34, 33, 33);
+    height: 15%;
+    
+}
+header,footer{
+    box-sizing: border-box;
+    height: 10%;
+    background-color: rgb(34, 33, 33);
+    
+}
+.command {
+    box-sizing: border-box;
+    float: right;
+}
+footer{
+    color: white;
+    text-align: center;
+
+}
+button:hover {
+    cursor: pointer;
+    background-color: rgb(43, 42, 42);
+}
+
+button{
+    padding: 1em;
+    width: 200px;
+    background-color: rgb(67, 65, 65);
+    color: white;
+    border: none;
+    font-size: 15px;
+    border-left: 1px solid rgb(0, 0, 0);
+    font-weight: bold;
+ }
+table{
+    height: 80%;
+    overflow: auto;
+    width: 100%;
+    display: block;
+}
+thead>tr {
+    background-color: rgb(18, 110, 73);
+    border: 1px solid grey;
+}
+
+tbody {
+    background-color: rgb(49, 40, 59);
+    overflow: scroll;
+    height: 80%;
+    box-sizing: border-box;
+    display: block;
+}
+
+tbody tr:nth-child(odd) {
+    background: rgb(97, 89, 89);
+}
+
+th,
+td {
+    padding: 1vh;
+    color: beige;
+    text-align: center;
+}
+
+thead{
+    width: 100%;
+    display: inline-block;
+    overflow: auto;
+    box-sizing: border-box;
+}
+select,input{
+    padding: 1vh;
+}
+select{
+    padding: 2vh;
+}
+
+@media (max-width:600px){
+    .head{
+        height: 20%;
+        display: flex;
+    };
+    .command{
+        margin-left: 20%;
+        display: grid;
+    }
+}
+tfoot{
+    position: relative;
+    overflow: auto;
+    display: block;
+    
+}
+select{
+    padding: 2vh;
+}
+[campo-dato='id'] {
+    width: 5%;
+}
+[campo-dato='marca'] {
+    width: 5%;
+}
+[campo-dato='modelo'] {
+    width: 5%;
+}
+[campo-dato='color'] {
+    width: 5%;
+}
+[campo-dato='cilindrada'] {
+    width: 5%;
+}
+[campo-dato='fecha'] {
+    width: 5%;
+}
+[campo-dato='png'] {
+    width: 5%;
+}
