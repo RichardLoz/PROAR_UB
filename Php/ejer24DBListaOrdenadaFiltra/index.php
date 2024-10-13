@@ -13,7 +13,7 @@
 <body>
     <div class="head">
         <header>
-            <h3>Canciones</h3>
+            <h3>Canciones UB MUSIC</h3>
         </header>
         <div class="command">
             <p>Orden</p>
