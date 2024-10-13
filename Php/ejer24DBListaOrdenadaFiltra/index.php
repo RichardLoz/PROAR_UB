@@ -77,7 +77,7 @@
 
     function cargaTabla() {
         $("#tbDatos").empty();
-        $("#tbDatos").html("<p>Esperando respuesta ..</p>");
+        $("#tbDatos").html("<p>Esperando respuesta ...</p>");
         var objAjax = $.ajax({
             type: "GET",
             url: "./cancionesJSONPrepare.php", // Cambia el archivo que prepara la respuesta JSON
