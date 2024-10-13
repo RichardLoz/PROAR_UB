@@ -29,8 +29,7 @@
                 <th campo-dato='nombre'><button id="btnNombre">Nombre</button></th>
                 <th campo-dato='genero_id'><button id="btnGenero">Género</button></th>
                 <th campo-dato='artista'><button id="btnArtista">Artista</button></th>
-                <th campo-dato='fecha_estreno'><button id="btnFecha'>Fecha de Estreno</button></th>
-                <th campo-dato='imagen_portada'><button id="btnImagen'>Portada</button></th>
+                <th campo-dato='fecha_estreno'><button id="btnFecha">Fecha de Estreno</button></th>
             </tr>
             <tr id="FiltrosTR">
                 <td><input type="text" id="filterID"></td>
@@ -49,7 +48,6 @@
             <th campo-dato='genero_id'>TGénero</th>
             <th campo-dato='artista'>TArtista</th>
             <th campo-dato='fecha_estreno'>TFecha de Estreno</th>
-            <th campo-dato='imagen_portada'>TPortada</th>
         </tfoot>
     </table>
     <footer><span id="totalRegistros"></span>Footer</footer>
@@ -97,12 +95,11 @@
                 objJson.canciones.forEach(function (cancion) {
                     var row = document.createElement("tr");
                     row.innerHTML = `
-                    <td campo-dato='id'> ${cancion.id_cancion} </td>
+                    <td campo-dato='id'> ${cancion.ID} </td>
                     <td campo-dato='nombre'> ${cancion.nombre} </td>
                     <td campo-dato='genero_id'> ${cancion.genero_nombre} </td>
                     <td campo-dato='artista'> ${cancion.artista} </td>
-                    <td campo-dato='fecha_estreno'> ${cancion.fecha_estreno} </td>
-                    <td campo-dato='imagen_portada'> <img src="data:image/jpeg;base64,${cancion.imagen_portada}" width="50"/> </td>`;
+                    <td campo-dato='fecha_estreno'> ${cancion.fecha_estreno} </td>`;
                     $("#tbDatos").append(row);
                 });
                 $("#totalRegistros").html("Nro de registros: " + objJson.canciones.length);
@@ -120,7 +117,7 @@
     
     $(document).ready(function () {
         $("#btnID").click(function () {
-            $("#order").val("id_cancion");
+            $("#order").val("ID");
         });
         $("#btnNombre").click(function () {
             $("#order").val("nombre");

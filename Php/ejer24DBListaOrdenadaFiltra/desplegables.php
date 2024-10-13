@@ -2,7 +2,7 @@
 $dbname="u182626001_PROAR_Rlozano";
 $host="rilozano.com";
 $user="u182626001_rlozano";
-$password="Misoas2022";
+$password="Misoas2021";
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -14,7 +14,7 @@ try {
 
 $generos=[];
 While($fila = $stmt->fetch()) {
-array_push($genero,$fila);
+array_push($generos,$fila);
 }
 $objgeneros = new stdClass();
 $objgeneros->generos=$generos;

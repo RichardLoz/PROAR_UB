@@ -25,7 +25,7 @@ try {
     // Consulta SQL que utiliza filtros para la tabla 'Canciones' (sin JOIN)
     $sql = "SELECT * FROM canciones 
             WHERE 
-                (id_cancion LIKE :ID) AND 
+                (ID LIKE :ID) AND 
                 (nombre LIKE :Nombre) AND
                 (genero_id LIKE :Genero) AND 
                 (artista LIKE :Artista) AND 
@@ -48,12 +48,11 @@ try {
     $canciones = [];
     while ($fila = $stmt2->fetch()) {
         $objCancion = new stdClass();
-        $objCancion->Id = $fila['id_cancion'];
+        $objCancion->Id = $fila['ID'];
         $objCancion->Nombre = $fila['nombre'];
         $objCancion->Genero = $fila['genero_id'];  // Aquí se devuelve el ID del género, no el nombre
         $objCancion->Artista = $fila['artista'];
         $objCancion->Fecha = $fila['fecha_estreno'];
-        $objCancion->Imagen = base64_encode($fila['imagen_portada']);  // Convertir la imagen a base64 para enviarla en JSON
         array_push($canciones, $objCancion);
     }
 
