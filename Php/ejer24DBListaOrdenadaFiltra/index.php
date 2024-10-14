@@ -50,7 +50,7 @@
             <th campo-dato='fecha_estreno'>TFecha de Estreno</th>
         </tfoot>
     </table>
-    <footer><span id="totalRegistros"></span>Footer</footer>
+    <footer><span id="totalRegistros"></span> Registros</footer>
 </body>
 <script>
 
