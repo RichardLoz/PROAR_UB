@@ -1,0 +1,109 @@
+/* Estilos globales */
+body {
+    background-color: #121212;
+    color: #E0E0E0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Estilos del formulario */
+form {
+    background-color: #1E1E1E;
+    padding: 2.5em;
+    border-radius: 15px;
+    width: 350px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+h1 {
+    color: #FFFFFF;
+    font-size: 24px;
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+/* Estilos de cada grupo de campo */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    color: #B0B0B0;
+    margin-bottom: 0.5em;
+}
+
+/* Estilos de los campos de input */
+input {
+    padding: 0.8em;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #2C2C2C;
+    color: #E0E0E0;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #1DB954;
+}
+
+/* Estilos del botón */
+button {
+    padding: 0.8em;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #1DB954;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #17a34d;
+}
+
+/* Estilos para el div de credenciales */
+.credenciales {
+    background-color: #1E1E1E;
+    padding: 1em;
+    margin-top: 1.5em;
+    border-radius: 8px;
+    width: 350px;
+    text-align: left;
+}
+
+.credenciales h3 {
+    color: #FFFFFF;
+    margin-bottom: 0.5em;
+    font-size: 18px;
+}
+
+.credenciales p {
+    color: #B0B0B0;
+    margin: 0.3em 0;
+    font-size: 16px;
+}
+
+/* Estilo responsivo para dispositivos móviles */
+@media (max-width: 400px) {
+    form, .credenciales {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+}

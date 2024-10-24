@@ -1,0 +1,68 @@
+/* Estilos globales */
+body {
+    background-color: #121212;
+    color: #E0E0E0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Contenedor principal */
+.session-container {
+    background-color: #1E1E1E;
+    padding: 2.5em;
+    border-radius: 15px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    color: #1DB954;
+    margin-bottom: 1em;
+}
+
+h2 {
+    font-size: 20px;
+    color: #FFFFFF;
+    margin-bottom: 1em;
+}
+
+p {
+    font-size: 18px;
+    color: #B0B0B0;
+    margin-bottom: 1em;
+}
+
+strong {
+    color: #FFFFFF;
+}
+
+/* Información de sesión */
+.session-info {
+    background-color: #2C2C2C;
+    padding: 1.5em;
+    border-radius: 8px;
+    margin-bottom: 1.5em;
+}
+
+/* Botones de acción */
+.actions button {
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    padding: 0.8em 1.2em;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 0.5em;
+    transition: background-color 0.3s ease;
+}
+
+.actions button:hover {
+    background-color: #17a34d;
+}
