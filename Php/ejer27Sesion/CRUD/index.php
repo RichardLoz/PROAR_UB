@@ -21,8 +21,8 @@
             <input type="text" id="order"></input>
             <button id="cargar">Cargar Datos</button>
             <button id="vaciar">Vaciar Datos</button>
-            <button id="altaBtn">Alta Registro</button>
             <button id="limpiarBtn">Limpiar Filtros</button>
+            <button id="altaBtn">Alta Registro</button>
         </div>
     </div>
 
@@ -41,8 +41,7 @@
                 <th campo-dato='artista'><button id="btnArtista">Artista</button></th>
                 <th campo-dato='fecha_estreno'><button id="btnFecha">Fecha de Estreno</button></th>
                 <th campo-dato='png'>Portada</th>
-                <th campo-dato='png'>Modificaciones</th>
-                <th campo-dato='png'>Bajas</th>
+                <th campo-dato='acciones'>Acciones</th>
             </tr>
             <tr id="FiltrosTR">
                 <td><input type="text" id="filterID"></td>
@@ -115,6 +114,25 @@ $(document).ready(function() {
     $("#cerrarSesion").click(function() {
     location.href="../DestruirSesion.php";
     });
+
+
+    function eliminarCancion(id) {
+    if (confirm("¿Estás seguro de que deseas eliminar esta canción?")) {
+        $.ajax({
+            type: "POST",
+            url: "baja.php",
+            data: { id: id },
+            success: function(response) {
+                alert(response);
+                cargaTabla(); // Recargar la tabla para reflejar los cambios
+            },
+            error: function() {
+                alert("Error al eliminar la canción.");
+            }
+        });
+    }
+}
+
 
 });
 

@@ -44,7 +44,7 @@
             <label for="Portada">Portada</label>
             <input type="file" id="PortadaForm" name="Portada" accept='.jpg,.png,.jpeg'>
         </div>
-
+        <input type="hidden" id='oculto' name='oculto'>
         <button id="submits" type="submit" value="DarAlta">Enviar Formulario</button>
     </form>
 </body>
@@ -74,6 +74,7 @@
     $(document).ready(function () {
         $("#submits").click(function (e) {
             e.preventDefault(); // Prevenir el comportamiento por defecto del submit
+            $("#oculto").val("1");
             var data = new FormData($("#formDeAlta")[0]);
             $.ajax({
                 type: 'POST',

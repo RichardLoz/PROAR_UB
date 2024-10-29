@@ -28,7 +28,7 @@ error_log("Genero recibido en el servidor: " . $filterGenero);
 
 try {
     // Consulta SQL con LEFT JOIN para incluir los géneros
-    $sql = "SELECT c.ID, c.nombre, IFNULL(g.genero, 'Sin género') as genero, c.artista, c.fecha_estreno
+    $sql = "SELECT c.ID, c.nombre, IFNULL(g.genero, 'Sin género') as genero, c.artista, c.fecha_estreno, c.imagen_portada
             FROM canciones c
             LEFT JOIN generos g ON c.genero_id = g.id_genero
             WHERE 

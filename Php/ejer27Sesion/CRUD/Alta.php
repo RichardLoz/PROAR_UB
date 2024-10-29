@@ -1,34 +1,49 @@
 <?php
-if(!isset($_POST['oculto'])){
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../FormLogin.php');
     exit();
 }
-else{
-    conect();
+
+if (!isset($_POST['oculto'])) {
+    exit("Error: El formulario no fue enviado correctamente.");
 }
 
 $respuesta_estado = ''; 
 
-function conect (){
+function conect()
+{
     include('./db.php');
-try {
+    try {
+        // Conexión a la base de datos
         $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+
+        // Obtener datos del formulario
+        $Nombre = $_POST['Nombre'];
+        $Genero = $_POST['Genero'];
+        $Artista = $_POST['Artista'];
+        $Fecha = $_POST['Fecha'];
+        $contenidoPortada = null;
+
+        // Verifica si se subió un archivo de imagen y lo procesa
+        if (!empty($_FILES['Portada']['tmp_name'])) {
+            $contenidoPortada = file_get_contents($_FILES['Portada']['tmp_name']);
+        }
+
+        // Inserción en la base de datos
+        $sql = 'INSERT INTO canciones (nombre, genero_id, artista, fecha_estreno, imagen_portada) VALUES (?, ?, ?, ?, ?)';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$Nombre, $Genero, $Artista, $Fecha, $contenidoPortada]);
+
+        echo "Registro guardado correctamente.";
+    } catch (PDOException $e) {
+        echo "Error al guardar el registro: " . $e->getMessage();
+    } finally {
+        $conn = null;
     }
-    catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
-    $Nombre = $_POST['Nombre'];
-    $Genero= $_POST['Genero'];
-    $Artista= $_POST['Artista'];
-    $Fecha= $_POST['Fecha'];
-    $contenidoPdf = file_get_contents($_FILES['PDF']['tmp_name']); 
-
-    $sql= ('INSERT INTO canciones(nombre,genero_id,artista,fecha_estreno,imagen_portada) VALUES(?,?,?,?,?)'); 
-    $stmt = $conn->prepare($sql);
-
-    $stmt->execute([$id,$Nombre,$Genero,$Artista,$Fecha,$contenidoPdf]);
-
-    $conn = null;
 }
 
+// Ejecuta la función de conexión
+conect();
+?>

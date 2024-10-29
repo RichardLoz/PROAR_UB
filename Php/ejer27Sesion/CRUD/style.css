@@ -101,6 +101,7 @@ footer {
 /* Ajustar la tabla para que se alinee correctamente */
 table {
     width: 100%;
+    table-layout: fixed;
     max-width: 100%;
     border-spacing: 0;
     border-collapse: collapse;
@@ -110,6 +111,7 @@ table {
 
 thead {
     background-color: #1C1C1C;
+    text-align: center;
     color: #E0E0E0;
     position: sticky;
     top: 0;
@@ -162,6 +164,39 @@ thead, tfoot {
     display: table; /* Aseguramos que thead y tfoot se comporten como partes normales de la tabla */
     width: 100%; /* Aseguramos que ocupen el 100% del ancho de la tabla */
 }
+
+/* Estilo para la columna de acciones */
+td[campo-dato='acciones'] {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btnModificar, .btnEliminar {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btnModificar {
+    background-color: #4CAF50; /* Verde para Modificar */
+}
+
+.btnEliminar {
+    background-color: #f44336; /* Rojo para Eliminar */
+}
+
+.btnModificar:hover {
+    background-color: #45a049;
+}
+
+.btnEliminar:hover {
+    background-color: #e53935;
+}
+
 
 /* Modernizar los botones de la tabla */
 button {

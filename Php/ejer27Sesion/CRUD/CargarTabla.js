@@ -25,43 +25,51 @@ $("#cargar").click(function () {
     });
 
     function cargaTabla() {
-    $("#tbDatos").empty(); // Limpiar tabla
-    $("#tbDatos").html("<p>Esperando respuesta... <span class='loader'></span></p>"); // Mostrar mensaje y loader
+        $("#tbDatos").empty();
+        $("#tbDatos").html("<p>Esperando respuesta... <span class='loader'></span></p>");
     
-    $.ajax({
-        type: "GET",
-        url: "./cancionesJSONPrepare.php",
-        data: {
-            orden: $("#order").val(),
-            filterID: $("#filterID").val(),
-            filterNombre: $("#filterNombre").val(),
-            filterGenero: $("#filterGenero").val(),
-            filterArtista: $("#filterArtista").val(),
-            filterFecha: $("#filterFecha").val()
-        },
-        success: function (respuestaDelServer) {
-            $("#tbDatos").empty(); // Limpiar tabla una vez que se reciben los datos
-            var tdatos = $("#tbDatos");
-            console.log(respuestaDelServer);
-            objJson = JSON.parse(respuestaDelServer);
-            objJson.canciones.forEach(function (cancion) {
-                var row = document.createElement("tr");
-                row.innerHTML = `
-                <td campo-dato='id'> ${cancion.Id} </td>
-                <td campo-dato='nombre'> ${cancion.Nombre} </td>
-                <td campo-dato='genero'> ${cancion.Genero} </td>
-                <td campo-dato='artista'> ${cancion.Artista} </td>
-                <td campo-dato='fecha_estreno'> ${cancion.Fecha} </td>`;
-                $("#tbDatos").append(row);
-            });
-            $("#totalRegistros").html("Nro de registros: " + objJson.canciones.length);
-        },
-        error: function () {
-            $("#tbDatos").empty(); // Limpiar la tabla si ocurre un error
-            alert("Error al cargar los datos");
-        }
-    });
-}
+        $.ajax({
+            type: "GET",
+            url: "./cancionesJSONPrepare.php",
+            data: {
+                orden: $("#order").val(),
+                filterID: $("#filterID").val(),
+                filterNombre: $("#filterNombre").val(),
+                filterGenero: $("#filterGenero").val(),
+                filterArtista: $("#filterArtista").val(),
+                filterFecha: $("#filterFecha").val()
+            },
+            success: function (respuestaDelServer) {
+                $("#tbDatos").empty();
+                const objJson = JSON.parse(respuestaDelServer);
+    
+                objJson.canciones.forEach(function (cancion) {
+                    const imagenPortada = cancion.imagen_portada ? `data:image/jpeg;base64,${cancion.imagen_portada}` : './img_no.jpeg';
+                    const row = `
+                    <tr>
+                        <td>${cancion.Id}</td>
+                        <td>${cancion.Nombre}</td>
+                        <td>${cancion.Genero}</td>
+                        <td>${cancion.Artista}</td>
+                        <td>${cancion.Fecha}</td>
+                        <td><img src="${imagenPortada}" alt="Portada" width="50" height="50"></td>
+                        <td>
+                            <button class="btnModificar" onclick="Modificar(${cancion.id})">Modificar</button>
+                            <button class="btnEliminar" onclick="Borrar(${cancion.id})">Eliminar</button>
+                        </td>
+                    </tr>`;
+                    $("#tbDatos").append(row);
+                });
+                $("#totalRegistros").html("Nro de registros: " + objJson.canciones.length);
+            },
+            error: function () {
+                $("#tbDatos").empty();
+                alert("Error al cargar los datos");
+            }
+        });
+    }
+    
+    
 
 
     $("#cargar").click(function () {

@@ -1,59 +1,29 @@
 <?php
-
-if(!isset($_POST['oculto'])){
+if (!isset($_GET['id'])) {
+    echo json_encode(["error" => "No se recibió un ID válido."]);
     exit();
 }
-else{
-    conectModi();
+
+include('./db.php');
+
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    echo json_encode(["error" => "Error de conexión: " . $e->getMessage()]);
+    exit();
 }
 
-function conectModi(){
-    include('./db.php');
-    try {
-        $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
-    
-    $Id= $_POST['id'];
-    $Nombre = $_POST['Nombre'];
-    $Genero= $_POST['Genero'];
-    $Artista= $_POST['Artista'];
-    $Fecha= $_POST['Fecha'];
-    $PDF= $_FILES['PDF'];
-    
-    $sql="UPDATE canciones SET nombre=:Nombre,genero_id=:Genero,artista=:Artista, fecha_estreno=:Fecha WHERE ID=:ID";
-    
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':ID', $Id);
-    $stmt->bindParam(':Nombre', $Nombre);
-    $stmt->bindParam(':Genero', $Genero);
-    $stmt->bindParam(':Artista', $Artista);
-    $stmt->bindParam(':Fecha', $Fecha);
-    
-    $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    $stmt->execute();
-    
-    $automobiles=[];
-    While($fila = $stmt->fetch()) {
-    $objAuto= new stdClass();
-    $objAuto->Id=$fila['ID'];
-    $objAuto->Nombre=$fila['Nombre'];
-    $objAuto->Genero=$fila['Genero'];
-    $objAuto->Artista=$fila['Artista'];
-    $objAuto->Fecha=$fila['Fecha'];
-    array_push($canciones,$objAuto);
-    }
-    
-    $objCanciones = new stdClass();
-    $objCanciones->automobiles=$canciones;
-    $salidaJson = json_encode($objCanciones);
-    
-    echo $salidaJson;
-    
+$Id = $_GET['id'];
+$sqlSelect = "SELECT id AS Id, nombre AS Nombre, genero_id AS Genero, artista AS Artista, fecha_estreno AS Fecha FROM canciones WHERE id = :ID";
+$stmtSelect = $conn->prepare($sqlSelect);
+$stmtSelect->bindParam(':ID', $Id, PDO::PARAM_INT);
+$stmtSelect->execute();
+$fila = $stmtSelect->fetch(PDO::FETCH_ASSOC);
+
+if ($fila) {
+    echo json_encode($fila);
+} else {
+    echo json_encode(["error" => "No se encontraron datos para el ID especificado."]);
 }
-
-
 ?>

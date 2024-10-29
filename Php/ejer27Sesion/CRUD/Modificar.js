@@ -1,34 +1,70 @@
-const ModalModi = document.querySelector(".modalModi");
-function Modificar(id){
+function Modificar(id) {
+    const ModalModi = document.querySelector(".modalModi");
+
     $.ajax({
         url: './modi.php',
         type: 'GET',
-        data: {
-            id: id,
-            Nombre: $("#Nombre").val(),
-            Genero: $("#Genero").val(),
-            Artista: $("#Artista").val(),
-            Fecha: $("#Fecha").val(),
-        },
+        data: { id: id },
         success: function (response) {
-            console.log(response);
-            $objJson = JSON.parse(response);
-            $modalModi = $(".modalModi");
-            $modalModi.html("<iframe src='./Modiform.php' frameborder='0'></iframe><button class='cerrarVentanaModi' onclick=cerrarModi()>X</button>");
-            $modalModi.showModal();
-            $("body").css("opacity", "0.3");
-            $(".cerrarVentanaModi").css({ "float": "right", "padding": "20px" });
-            $modalModi.css("background-color", "rgb(4, 22, 22)");
-            objJson.canciones.forEach(function (auto) {
-            console.log(cancion.Nombre)
-            $("#Nombre").append(cancion.Nombre);
-            $("#Genero").append(cancion.Genero);
-            $("#Artista").append(cancion.Artista);
-            $("#Fecha").append(cancion.Fecha);
-        })
+            try {
+                const objJson = JSON.parse(response);
+
+                // Llenar el select de Géneros
+                $.ajax({
+                    url: './desplegables.php',
+                    type: 'GET',
+                    success: function (res) {
+                        const generos = JSON.parse(res).generos;
+                        const selectGenero = $("#GeneroFormModi");
+                        selectGenero.empty();
+
+                        generos.forEach(function (item) {
+                            const option = new Option(item.genero, item.id_genero);
+                            if (item.id_genero == objJson.Genero) {
+                                option.selected = true;
+                            }
+                            selectGenero.append(option);
+                        });
+                    },
+                    error: function() {
+                        alert("Error al cargar los géneros.");
+                    }
+                });
+
+                // Llenar otros campos
+                $("#Nombre").val(objJson.Nombre);
+                $("#Artista").val(objJson.Artista);
+                $("#Fecha").val(objJson.Fecha);
+
+                // Mostrar el modal y aplicar opacidad
+                if (ModalModi) {
+                    ModalModi.showModal();
+                    $("body").css("opacity", "0.3");
+                } else {
+                    console.error("No se encontró el modal para modificar.");
+                }
+            } catch (e) {
+                console.error("Error al parsear JSON:", e, response);
+                alert("Error al cargar los datos de la canción.");
+            }
+        },
+        error: function () {
+            alert('Error en la solicitud a modi.php');
+        }
+    });
 }
-    })}
+
 function cerrarModi() {
-    ModalModi.close();
+    const ModalModi = document.querySelector(".modalModi");
+    if (ModalModi) {
+        ModalModi.close();
+        $("body").css("opacity", "1"); 
+    } else {
+        console.error("No se encontró el modal para cerrar.");
+    }
+}
+
+// Restaurar opacidad al cerrar modal
+document.querySelector(".modalModi").addEventListener("close", function () {
     $("body").css("opacity", "1");
-};
+});
