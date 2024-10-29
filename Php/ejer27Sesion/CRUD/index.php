@@ -14,6 +14,7 @@
     <div class="head">
         <header>
             <h3>Canciones UB-MUSIC</h3>
+            <button id="cerrarSesion">Cerrar Sesión</button>
         </header>
         <div class="command">
             <p>Orden</p>
@@ -109,6 +110,13 @@ $(document).ready(function() {
             ModalAbrirModi.close();
         }
     }
+
+    $(document).ready(function() {
+    $("#cerrarSesion").click(function() {
+    location.href="../DestruirSesion.php";
+    });
+
+});
 
 </script>
 

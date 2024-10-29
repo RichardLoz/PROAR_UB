@@ -1,8 +1,8 @@
 <?php
-// session_start();
-// if(isset($_SESSION['usuario'])){
-//     header('Location: Index.html');
-// }
+session_start();
+if(isset($_SESSION['usuario'])){
+    header('Location: Index.html');
+}
 ?>
 
 <!DOCTYPE html>
