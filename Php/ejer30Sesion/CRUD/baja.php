@@ -1,12 +1,16 @@
 <?php
 session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../No_session.php');
+    exit();
+}
 
 include ('./db.php');
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $Id = $_POST['id']; // Asegúrate de usar POST
+    $Id = $_POST['id']; 
 
     $sql = "DELETE FROM canciones WHERE ID = :ID";
     $stmt = $conn->prepare($sql);
