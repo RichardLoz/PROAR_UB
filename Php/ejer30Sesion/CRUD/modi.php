@@ -1,9 +1,5 @@
 <?php
 session_start();
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../No_session.php');
-    exit();
-}
 
 if (!isset($_GET['id'])) {
     echo json_encode(["error" => "No se recibió un ID válido."]);
