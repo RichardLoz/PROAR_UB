@@ -41,6 +41,6 @@ if ($usuario_bd) {
 }
 ?>
 <html>
-    <Button><a href="./FormLogin.php">Volver</a></Button>
+    <Button><a href="./FormLogin.html">Volver</a></Button>
 </html>
 

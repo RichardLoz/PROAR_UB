@@ -66,3 +66,29 @@ strong {
 .actions button:hover {
     background-color: #17a34d;
 }
+
+
+        /* Estilos adicionales para la animación */
+        .lock-icon {
+            font-size: 80px;
+            color: #ff4c4c;
+            animation: bounce 1s infinite;
+            margin-bottom: 20px;
+        }
+
+        /* Animación de rebote */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .message {
+            font-size: 24px;
+            color: #B0B0B0;
+            margin-bottom: 1em;
+            text-align: center;
+        }
