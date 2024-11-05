@@ -5,7 +5,7 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 
-include ('./db.php');
+include ('db.php');
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);

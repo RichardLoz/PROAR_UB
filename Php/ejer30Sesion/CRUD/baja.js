@@ -1,7 +1,7 @@
 function Borrar(id, nombre) {
     if (confirm(`¿Desea eliminar la canción con ID ${id}: ${nombre}?`)) {
         $.ajax({
-            url: './baja.php',
+            url: 'baja.php',
             type: 'POST', // Cambiado a POST por seguridad
             data: { id: id },
             success: function (response) {
