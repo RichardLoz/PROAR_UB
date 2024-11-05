@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../no_session.php');
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">

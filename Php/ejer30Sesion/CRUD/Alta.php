@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: ../FormLogin.php');
+    header('Location: no_session.php');
     exit();
 }
 
