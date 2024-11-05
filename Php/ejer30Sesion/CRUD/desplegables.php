@@ -4,7 +4,7 @@ session_start(); // Iniciar sesión
 // Verificar si la sesión está activa
 if (!isset($_SESSION['usuario'])) {
     // Si no hay sesión, redirigir a la página de error
-    header('Location: ../no_session.php');
+    header('Location: ../No_session.php');
     exit();
 }
 

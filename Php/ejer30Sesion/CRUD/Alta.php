@@ -1,10 +1,7 @@
 <?php
-session_start(); // Iniciar sesión
-
-// Verificar si la sesión está activa
+session_start();
 if (!isset($_SESSION['usuario'])) {
-    // Si no hay sesión, redirigir a la página de error
-    header('Location: ../no_session.php');
+    header('Location: ../FormLogin.php');
     exit();
 }
 
