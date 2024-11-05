@@ -1,6 +1,9 @@
 <?php 
 session_start();
-
+if (!isset($_SESSION['usuario'])) {
+    header('Location: no_session.php');
+    exit();
+}
 
 $_SESSION['nuevaSesion'] = session_create_id();
 $usuario = $_SESSION['usuario'];
