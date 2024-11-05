@@ -1,8 +1,6 @@
 <?php 
 session_start();
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../FormLogin.html');
-}
+
 
 $_SESSION['nuevaSesion'] = session_create_id();
 $usuario = $_SESSION['usuario'];
