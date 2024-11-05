@@ -20,7 +20,7 @@ function Modificar(id) {
 
                         generos.forEach(function (item) {
                             const option = new Option(item.genero, item.id_genero);
-                            if (item.id_genero == objJson.Genero) {
+                            if (item.id_genero == objJson.genero_id) {
                                 option.selected = true;
                             }
                             selectGenero.append(option);
@@ -31,10 +31,10 @@ function Modificar(id) {
                     }
                 });
 
-                // Llenar otros campos
-                $("#Nombre").val(objJson.Nombre);
-                $("#Artista").val(objJson.Artista);
-                $("#Fecha").val(objJson.Fecha);
+                // Llenar otros campos con los datos del registro seleccionado
+                $("#Nombre").val(objJson.nombre);
+                $("#Artista").val(objJson.artista);
+                $("#Fecha").val(objJson.fecha_estreno);
 
                 // Mostrar el modal y aplicar opacidad
                 if (ModalModi) {

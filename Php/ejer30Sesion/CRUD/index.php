@@ -16,7 +16,7 @@ if (!isset($_SESSION['usuario'])) {
     <link rel="stylesheet" href="./style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <title>ejer26DBAbm</title>
+    <title>ejer30-Sesión-ABM</title>
 </head>
 
 <body>
