@@ -79,7 +79,7 @@
             $.ajax({
                 type: 'POST',
                 enctype: 'multipart/form-data',
-                url: "./Modi.php",
+                url: "./modi.php",
                 processData: false,
                 contentType: false,
                 cache: false,
