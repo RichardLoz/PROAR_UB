@@ -29,27 +29,35 @@ function cargaTabla() {
     $.ajax({
         type: "GET",
         url: "./cancionesJSONPrepare.php",
-        data: {
-            orden: $("#order").val(),
-            filterID: $("#filterID").val(),
-            filterNombre: $("#filterNombre").val(),
-            filterGenero: $("#filterGenero").val(),
-            filterArtista: $("#filterArtista").val(),
-            filterFecha: $("#filterFecha").val()
-        },
         success: function (respuestaDelServer) {
+            console.log("Respuesta del servidor:", respuestaDelServer); // <-- Agregar esta línea
             $("#tbDatos").empty();
-            const objJson = JSON.parse(respuestaDelServer);
+
+            let objJson;
+            try {
+                objJson = JSON.parse(respuestaDelServer);
+            } catch (error) {
+                console.error("Error al parsear JSON:", error);
+                showToast("Error al procesar la respuesta del servidor");
+                return;
+            }
+
+            // Asegúrate de que `objJson.canciones` sea un array
+            if (!objJson || !Array.isArray(objJson.canciones)) {
+                console.error("La respuesta no contiene un array válido:", objJson);
+                showToast("Error: Datos no válidos recibidos");
+                return;
+            }
 
             objJson.canciones.forEach(function (cancion) {
-                const imagenPortada = cancion.imagen_portada ? `data:image/jpeg;base64,${cancion.imagen_portada}` : './img_no.jpeg';
+                const imagenPortada = cancion.ImagenPortada ? `data:image/jpeg;base64,${cancion.ImagenPortada}` : './img_no.jpeg';
                 const row = `
-<tr>
-                    <td>${cancion.ID}</td>                   <!-- 'ID' debe coincidir con PHP -->
-                    <td>${cancion.Nombre}</td>               <!-- 'Nombre' debe coincidir con PHP -->
-                    <td>${cancion.Genero}</td>               <!-- 'Genero' debe coincidir con PHP -->
-                    <td>${cancion.Artista}</td>              <!-- 'Artista' debe coincidir con PHP -->
-                    <td>${cancion.Fecha}</td>                <!-- 'Fecha' debe coincidir con PHP -->
+                <tr>
+                    <td>${cancion.ID}</td>
+                    <td>${cancion.Nombre}</td>
+                    <td>${cancion.Genero}</td>
+                    <td>${cancion.Artista}</td>
+                    <td>${cancion.Fecha}</td>
                     <td><img src="${imagenPortada}" alt="Portada" width="50"></td>
                     <td>
                         <button class="btnModificar" onclick="Modificar(${cancion.ID})">Modificar</button>
@@ -58,6 +66,7 @@ function cargaTabla() {
                 </tr>`;
                 $("#tbDatos").append(row);
             });
+
             $("#totalRegistros").html(`Nro de registros: ${objJson.canciones.length}`);
         },
         error: function () {
@@ -66,6 +75,7 @@ function cargaTabla() {
         }
     });
 }
+
 
 // Evento para cargar la tabla al hacer clic en el botón "Cargar Datos"
 $("#cargar").click(function () {

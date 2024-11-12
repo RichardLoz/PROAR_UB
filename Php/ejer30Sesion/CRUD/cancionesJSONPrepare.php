@@ -10,8 +10,6 @@ try {
     exit;
 }
 
-sleep(3);
-
 $orden = isset($_GET["orden"]) && !empty($_GET["orden"]) ? $_GET["orden"] : 'ID';
 $filterId = '%' . $_GET['filterID'] . '%';
 $filterNombre = '%' . $_GET['filterNombre'] . '%';
@@ -20,8 +18,8 @@ $filterArtista = '%' . $_GET['filterArtista'] . '%';
 $filterFecha = '%' . $_GET['filterFecha'] . '%';
 
 try {
-    $sql = "SELECT c.ID, c.nombre, IFNULL(g.genero, 'Sin género') as genero, 
-                   c.artista, c.fecha_estreno, c.imagen_portada
+    $sql = "SELECT c.ID as Id, c.nombre as Nombre, IFNULL(g.genero, 'Sin género') as Genero, 
+                   c.artista as Artista, c.fecha_estreno as Fecha, c.imagen_portada as ImagenPortada
             FROM canciones c
             LEFT JOIN generos g ON c.genero_id = g.id_genero
             WHERE 
@@ -49,17 +47,21 @@ try {
 
     $canciones = [];
     while ($fila = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-        $imagenPortada = $fila['imagen_portada'] ? base64_encode($fila['imagen_portada']) : null;
+        $imagenPortada = $fila['ImagenPortada'] ? base64_encode($fila['ImagenPortada']) : null;
         $canciones[] = [
-            'ID' => $fila['Id'],                 // Aquí el campo es 'ID'
-            'Nombre' => $fila['Nombre'],         // Aquí el campo es 'Nombre'
-            'Genero' => $fila['Genero'],         // Aquí el campo es 'Genero'
-            'Artista' => $fila['Artista'],       // Aquí el campo es 'Artista'
-            'Fecha' => $fila['Fecha'],           // Aquí el campo es 'Fecha'
-            'ImagenPortada' => $imagenPortada    // Aquí el campo es 'ImagenPortada'
+            'ID' => $fila['Id'],
+            'Nombre' => $fila['Nombre'],
+            'Genero' => $fila['Genero'],
+            'Artista' => $fila['Artista'],
+            'Fecha' => $fila['Fecha'],
+            'ImagenPortada' => $imagenPortada
         ];
     }
-    echo json_encode(['canciones' => $canciones]);
+
+    // Imprimir para depuración
+    header('Content-Type: application/json');
+    echo json_encode(['canciones' => $canciones], JSON_PRETTY_PRINT);
+
 } catch (PDOException $e) {
     echo json_encode(["error" => "Error en la consulta SQL: " . $e->getMessage()]);
     exit;
