@@ -32,7 +32,7 @@
     <div class="modales">
         <dialog class="modalAbrirPDF"></dialog>
         <dialog class="modalAlta"><iframe src="./AltaForm.php"  width='800px' height='500px' frameborder="0"></iframe><button class='cerrarventana' onclick=cerrarAlta()>X</button></dialog>
-        <dialog class="modalModi"><iframe src="./Modiform.php"  width='800px' height='800px' frameborder="0"></iframe><button class='cerrarventana' onclick=cerrarModi()>X</button></dialog></dialog> 
+        <dialog class="modalModi"><iframe src="./ModificarCancion.php"  width='800px' height='800px' frameborder="0"></iframe><button class='cerrarventana' onclick=cerrarModi()>X</button></dialog></dialog> 
     </div>
 
     <table style="width: 100%;">
