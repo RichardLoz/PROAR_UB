@@ -2,31 +2,26 @@
 session_start();
 include('./db.php');
 
-// Procesar la inserción de la canción si se envía el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
     try {
         $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Sanitizar y validar entradas
         $nombre = htmlspecialchars($_POST['Nombre'], ENT_QUOTES, 'UTF-8');
         $genero = filter_var($_POST['Genero'], FILTER_VALIDATE_INT);
         $artista = htmlspecialchars($_POST['Artista'], ENT_QUOTES, 'UTF-8');
         $fecha = htmlspecialchars($_POST['Fecha'], ENT_QUOTES, 'UTF-8');
         $contenidoPortada = null;
 
-        // Validar campos obligatorios
         if (empty($nombre) || empty($genero) || empty($artista) || empty($fecha)) {
             echo "Error: Todos los campos son obligatorios.";
             exit;
         }
 
-        // Procesar imagen si se ha subido
         if (!empty($_FILES['Portada']['tmp_name'])) {
             $contenidoPortada = file_get_contents($_FILES['Portada']['tmp_name']);
         }
 
-        // Insertar en la base de datos
         $sql = 'INSERT INTO canciones (nombre, genero_id, artista, fecha_estreno, imagen_portada) VALUES (?, ?, ?, ?, ?)';
         $stmt = $conn->prepare($sql);
         $stmt->execute([$nombre, $genero, $artista, $fecha, $contenidoPortada]);
@@ -44,10 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nueva Canción</title>
+    <title>Alta de Canción</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
-        /* Estilos para el formulario y los modales */
         body {
             background-color: #1C1C1C;
             color: #E0E0E0;
@@ -63,21 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
             flex-direction: column;
             gap: 15px;
         }
-        input, select, button {
-            padding: 10px;
-            border-radius: 5px;
-        }
-        #toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            display: none;
-        }
-        #modalConfirm {
+        .modalConfirm {
             display: none;
             position: fixed;
             top: 50%;
@@ -87,66 +67,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
             padding: 20px;
             border-radius: 8px;
             z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+        }
+        .modalConfirm button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modalConfirm button.confirm {
+            background-color: #28a745;
+            color: white;
+        }
+        .modalConfirm button.cancel {
+            background-color: #dc3545;
+            color: white;
+        }
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #FFF;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            z-index: 2000;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <h2>Nueva Canción</h2>
+    <h2>Alta de Canción</h2>
     
-    <!-- Formulario de Alta -->
     <form id="formDeAlta" method="post" enctype="multipart/form-data">
         <input type="hidden" id="oculto" name="oculto" value="1">
-        <div>
-            <label>Nombre</label>
-            <input type="text" id="Nombre" name="Nombre" required>
-        </div>
+        <div><label>Nombre</label><input type="text" id="Nombre" name="Nombre" required></div>
         <div>
             <label>Género</label>
-            <select id="GeneroFormAlta" name="Genero" required></select>
+            <select id="GeneroFormAlta" name="Genero" required>
+                <option value="">Selecciona un género</option>
+            </select>
         </div>
-        <div>
-            <label>Artista</label>
-            <input type="text" id="Artista" name="Artista" required>
-        </div>
-        <div>
-            <label>Fecha de Estreno</label>
-            <input type="date" id="Fecha" name="Fecha" required>
-        </div>
-        <div>
-            <label>Portada</label>
-            <input type="file" id="Portada" name="Portada" accept=".jpg,.jpeg,.png">
-        </div>
+        <div><label>Artista</label><input type="text" id="Artista" name="Artista" required></div>
+        <div><label>Fecha</label><input type="date" id="Fecha" name="Fecha" required></div>
+        <div><label>Portada</label><input type="file" id="Portada" name="Portada" accept=".jpg,.jpeg,.png"></div>
         <button type="button" id="showModal">Agregar Canción</button>
     </form>
 
-    <!-- Modal de confirmación -->
-    <div id="modalConfirm">
+    <div class="modalConfirm" id="modalConfirm">
         <p>¿Desea agregar la canción?</p>
-        <button id="confirmAdd">CONFIRMAR</button>
-        <button id="cancelAdd">CANCELAR</button>
+        <button class="confirm" id="confirmAdd">CONFIRMAR</button>
+        <button class="cancel" id="cancelAdd">CANCELAR</button>
     </div>
 
-    <!-- Notificación estilo "toast" -->
     <div id="toast"></div>
 
     <script>
         $(document).ready(function () {
-            // Cargar géneros dinámicamente
-            $.get('./desplegables.php', function (response) {
-                const generos = JSON.parse(response).generos;
-                const select = $('#GeneroFormAlta');
-                generos.forEach(g => select.append(new Option(g.genero, g.id_genero)));
-            });
-
-            // Mostrar modal de confirmación
             $('#showModal').click(function () {
-                $('#modalConfirm').show();
+                $('#modalConfirm').fadeIn();
             });
 
-            // Confirmar la inserción
             $('#confirmAdd').click(async function () {
                 const formData = new FormData($('#formDeAlta')[0]);
-                const response = await $.post({
+                const response = await $.ajax({
+                    type: 'POST',
                     url: './AltaCancion.php',
                     data: formData,
                     processData: false,
@@ -156,24 +142,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
                 if (response === "success") {
                     showToast("Canción agregada exitosamente");
                     $('#formDeAlta')[0].reset();
+                    $('#modalConfirm').fadeOut();
+                    parent.cerrarAlta();
+                    parent.cargaTabla();
                 } else {
                     showToast("Error al agregar la canción");
                 }
-                $('#modalConfirm').hide();
             });
 
-            // Cancelar la inserción
             $('#cancelAdd').click(function () {
-                $('#modalConfirm').hide();
+                $('#modalConfirm').fadeOut();
                 showToast("Acción cancelada");
             });
 
-            // Función para mostrar notificaciones tipo "toast"
             function showToast(message) {
                 const toast = $('#toast');
                 toast.text(message).fadeIn();
                 setTimeout(() => toast.fadeOut(), 3000);
             }
+
+            $.get('./desplegables.php', function (response) {
+                const generos = JSON.parse(response).generos;
+                const select = $('#GeneroFormAlta');
+                select.empty();
+                select.append('<option value="">Selecciona un género</option>');
+                generos.forEach(g => {
+                    select.append(new Option(g.genero, g.id_genero));
+                });
+            });
         });
     </script>
 </body>
