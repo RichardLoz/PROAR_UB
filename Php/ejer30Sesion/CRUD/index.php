@@ -84,18 +84,19 @@
                 $('#formContainer').empty();
             }
         }
-
         window.cerrarAlta = cerrarAlta;
 
         // Mostrar modal de confirmación para eliminar
         window.Borrar = function (id, nombre) {
             idEliminar = id;
             $("#eliminarInfo").text(`¿Desea eliminar la canción con ID ${id}: ${nombre}?`);
-            modalEliminar.showModal(); // Usar JavaScript puro
+            if (modalEliminar) {
+                modalEliminar.showModal();
+            }
         };
 
         // Confirmar eliminación
-        document.getElementById('confirmDelete').addEventListener('click', async function () {
+        $('#confirmDelete').click(async function () {
             if (idEliminar) {
                 try {
                     const response = await $.ajax({
@@ -106,7 +107,7 @@
 
                     if (response.trim() === "success") {
                         showToast("Canción eliminada exitosamente");
-                        cargaTabla();
+                        cargaTabla(); // Recargar la tabla después de eliminar
                     } else {
                         showToast(response);
                     }
@@ -118,12 +119,12 @@
         });
 
         // Cancelar eliminación
-        document.getElementById('cancelDelete').addEventListener('click', function () {
+        $('#cancelDelete').click(function () {
             modalEliminar.close();
             showToast("Acción cancelada");
         });
 
-        // Función para mostrar notificaciones tipo "toast"
+        // Mostrar notificación tipo "toast"
         function showToast(message) {
             const toast = $('#toast');
             toast.text(message).fadeIn();
@@ -137,12 +138,37 @@
 
         // Función para cargar la tabla de canciones
         function cargaTabla() {
-            $.get('./cancionesJSONPrepare.php', function (data) {
-                $('#tbDatos').html(data);
+            $.ajax({
+                type: "GET",
+                url: './cancionesJSONPrepare.php',
+                success: function (data) {
+                    let canciones = JSON.parse(data);
+                    let tablaHtml = "";
+                    canciones.forEach(cancion => {
+                        tablaHtml += `
+                        <tr>
+                            <td>${cancion.ID}</td>
+                            <td>${cancion.nombre}</td>
+                            <td>${cancion.genero}</td>
+                            <td>${cancion.artista}</td>
+                            <td>${cancion.fecha_estreno}</td>
+                            <td><img src="./img_no.jpeg" alt="Portada" width="50"></td>
+                            <td>
+                                <button class="btnModificar" onclick="Modificar(${cancion.ID})">Modificar</button>
+                                <button class="btnEliminar" onclick="Borrar(${cancion.ID}, '${cancion.nombre}')">Eliminar</button>
+                            </td>
+                        </tr>`;
+                    });
+                    $('#tbDatos').html(tablaHtml);
+                    $("#totalRegistros").text(`Nro de registros: ${canciones.length}`);
+                },
+                error: function () {
+                    showToast("Error al cargar los datos");
+                }
             });
         }
 
-        cargaTabla();
+        cargaTabla(); // Cargar la tabla al inicio
     });
 </script>
 
