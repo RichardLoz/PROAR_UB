@@ -61,8 +61,6 @@
 
 <script src="./CargarTabla.js"></script>
 <script src="./MostrarPDF.js"></script>
-<script src="./Modificar.js"></script>
-<script src="./baja.js"></script>
 
 <script>
     $(document).ready(function () {
