@@ -10,6 +10,8 @@ try {
     exit;
 }
 
+sleep(3);
+
 $orden = isset($_GET["orden"]) && !empty($_GET["orden"]) ? $_GET["orden"] : 'ID';
 $filterId = '%' . $_GET['filterID'] . '%';
 $filterNombre = '%' . $_GET['filterNombre'] . '%';
