@@ -1,7 +1,7 @@
 $("#cargar").click(function () {
-    console.log("Genero seleccionado:", $("#filterGenero").val());
+    console.log("Género seleccionado:", $("#filterGenero").val());
     cargaTabla();
-});
+  });
 
 $(document).ready(function () {
     $("#order").val("");
@@ -39,11 +39,15 @@ function cargaTabla() {
         },
         success: function (respuestaDelServer) {
             $("#tbDatos").empty();
-            const objJson = JSON.parse(respuestaDelServer);
-
-            objJson.canciones.forEach(function (cancion) {
-                const imagenPortada = cancion.imagen_portada ? `data:image/jpeg;base64,${cancion.imagen_portada}` : './img_no.jpeg';
-                const row = `
+      
+            try {
+              const objJson = JSON.parse(respuestaDelServer);
+      
+              if (objJson && Array.isArray(objJson.canciones)) {
+                objJson.canciones.forEach(function (cancion) {
+                  const imagenPortada = cancion.imagen_portada ? `data:image/jpeg;base64,${cancion.imagen_portada}` : './img_no.jpeg';
+      
+                  const row = `
                 <tr>
                     <td>${cancion.Id}</td>
                     <td>${cancion.nombre}</td>
@@ -59,13 +63,20 @@ function cargaTabla() {
                 $("#tbDatos").append(row);
             });
             $("#totalRegistros").html(`Nro de registros: ${objJson.canciones.length}`);
-        },
-        error: function () {
-            $("#tbDatos").empty();
-            alert("Error al cargar los datos");
+        }else {
+            console.error("Respuesta JSON inválida:", respuestaDelServer);
+            $("#tbDatos").html("<p>Error al cargar los datos. La respuesta JSON no tiene el formato esperado.</p>");
+          }
+        } catch (error) {
+          console.error("Error al parsear el JSON:", error);
+          $("#tbDatos").html("<p>Error al cargar los datos. Se produjo un error al parsear el JSON.</p>");
         }
+      },
+      error: function () {
+        $("#tbDatos").html("<p>Error al cargar los datos. Verifique su conexión a internet y el servidor.</p>");
+      }
     });
-}
+  }
 
 // Evento para cargar la tabla al hacer clic en el botón "Cargar Datos"
 $("#cargar").click(function () {
