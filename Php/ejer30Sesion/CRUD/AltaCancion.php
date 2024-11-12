@@ -124,13 +124,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
     <div id="toast"></div>
 
     <script>
-        $(document).ready(function () {
-            $('#showModal').click(function () {
-                $('#modalConfirm').fadeIn();
-            });
+    $(document).ready(function () {
+        // Mostrar el modal de confirmación
+        $('#showModal').click(function () {
+            $('#modalConfirm').fadeIn();
+        });
 
-            $('#confirmAdd').click(async function () {
-                const formData = new FormData($('#formDeAlta')[0]);
+        // Confirmar la inserción y evitar que la página se recargue
+        $('#confirmAdd').click(async function (event) {
+            event.preventDefault(); // Prevenir el comportamiento por defecto
+
+            // Crear un FormData con los datos del formulario
+            const formData = new FormData($('#formDeAlta')[0]);
+
+            try {
                 const response = await $.ajax({
                     type: 'POST',
                     url: './AltaCancion.php',
@@ -148,29 +155,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
                 } else {
                     showToast("Error al agregar la canción");
                 }
-            });
-
-            $('#cancelAdd').click(function () {
-                $('#modalConfirm').fadeOut();
-                showToast("Acción cancelada");
-            });
-
-            function showToast(message) {
-                const toast = $('#toast');
-                toast.text(message).fadeIn();
-                setTimeout(() => toast.fadeOut(), 3000);
+            } catch (error) {
+                showToast("Error en la solicitud");
             }
+        });
 
-            $.get('./desplegables.php', function (response) {
-                const generos = JSON.parse(response).generos;
-                const select = $('#GeneroFormAlta');
-                select.empty();
-                select.append('<option value="">Selecciona un género</option>');
-                generos.forEach(g => {
-                    select.append(new Option(g.genero, g.id_genero));
-                });
+        // Cancelar la inserción
+        $('#cancelAdd').click(function () {
+            $('#modalConfirm').fadeOut();
+            showToast("Acción cancelada");
+        });
+
+        // Función para mostrar notificaciones tipo "toast"
+        function showToast(message) {
+            const toast = $('#toast');
+            toast.text(message).fadeIn();
+            setTimeout(() => toast.fadeOut(), 3000);
+        }
+
+        // Cargar géneros dinámicamente
+        $.get('./desplegables.php', function (response) {
+            const generos = JSON.parse(response).generos;
+            const select = $('#GeneroFormAlta');
+            select.empty();
+            select.append('<option value="">Selecciona un género</option>');
+            generos.forEach(g => {
+                select.append(new Option(g.genero, g.id_genero));
             });
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>
