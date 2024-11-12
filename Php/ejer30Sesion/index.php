@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 session_start(); // Iniciar la sesión
 
 // Verificar si la sesión está activa
@@ -12,3 +12,4 @@ if (!isset($_SESSION['usuario'])) {
 header('Location: CRUD/index.php');
 exit();
 ?>
+ -->
