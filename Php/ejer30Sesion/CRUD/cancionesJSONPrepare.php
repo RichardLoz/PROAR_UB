@@ -12,6 +12,8 @@ try {
     exit;
 }
 
+sleep(3);
+
 // Capturar los filtros enviados por GET
 $orden = isset($_GET["orden"]) && !empty($_GET["orden"]) ? $_GET["orden"] : 'ID';
 $filterId = '%' . $_GET['filterID'] . '%';

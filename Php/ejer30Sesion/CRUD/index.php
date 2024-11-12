@@ -91,11 +91,11 @@
         window.Borrar = function (id, nombre) {
             idEliminar = id;
             $("#eliminarInfo").text(`¿Desea eliminar la canción con ID ${id}: ${nombre}?`);
-            $("#modalEliminar").showModal();
+            modalEliminar.showModal(); // Usar JavaScript puro
         };
 
         // Confirmar eliminación
-        $('#confirmDelete').click(async function () {
+        document.getElementById('confirmDelete').addEventListener('click', async function () {
             if (idEliminar) {
                 try {
                     const response = await $.ajax({
@@ -114,12 +114,12 @@
                     showToast("Error al eliminar la canción");
                 }
             }
-            $("#modalEliminar").close();
+            modalEliminar.close();
         });
 
         // Cancelar eliminación
-        $('#cancelDelete').click(function () {
-            $("#modalEliminar").close();
+        document.getElementById('cancelDelete').addEventListener('click', function () {
+            modalEliminar.close();
             showToast("Acción cancelada");
         });
 
@@ -135,7 +135,7 @@
             location.href = "../DestruirSesion.php";
         });
 
-        // Cargar la tabla de canciones
+        // Función para cargar la tabla de canciones
         function cargaTabla() {
             $.get('./cancionesJSONPrepare.php', function (data) {
                 $('#tbDatos').html(data);
@@ -145,4 +145,5 @@
         cargaTabla();
     });
 </script>
+
 </html>
