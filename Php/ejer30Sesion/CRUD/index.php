@@ -16,7 +16,7 @@
         </header>
         <div class="command">
             <p>Orden</p>
-            <input type="text" id="order"></input>
+            <input type="text" id="order">
             <button id="cargar">Cargar Datos</button>
             <button id="vaciar">Vaciar Datos</button>
             <button id="limpiarBtn">Limpiar Filtros</button>
@@ -29,6 +29,13 @@
         <dialog class="modalAlta" id="modalAlta">
             <div id="formContainer"></div>
             <button class='cerrarventana' onclick="cerrarAlta()">X</button>
+        </dialog>
+
+        <!-- Modal para Confirmar Eliminación -->
+        <dialog class="modalEliminar" id="modalEliminar">
+            <p id="eliminarInfo"></p>
+            <button class="confirm" id="confirmDelete">CONFIRMAR</button>
+            <button class="cancel" id="cancelDelete">CANCELAR</button>
         </dialog>
     </div>
 
@@ -58,28 +65,65 @@
 <script src="./baja.js"></script>
 
 <script>
-    $(document).ready(function() {
-        const ModalAbrirAlta = document.querySelector("#modalAlta");
+    $(document).ready(function () {
+        const modalAlta = document.querySelector("#modalAlta");
+        const modalEliminar = document.querySelector("#modalEliminar");
+        let idEliminar = null;
 
         // Abrir modal para Alta de Canción
-        $('#altaBtn').click(function() {
-            $('#formContainer').load('AltaCancion.php', function() {
-                ModalAbrirAlta.showModal();
+        $('#altaBtn').click(function () {
+            $('#formContainer').load('AltaCancion.php', function () {
+                modalAlta.showModal();
             });
         });
 
         // Cerrar modal de alta
         function cerrarAlta() {
-            if (ModalAbrirAlta) {
-                ModalAbrirAlta.close();
+            if (modalAlta) {
+                modalAlta.close();
                 $('#formContainer').empty();
             }
         }
 
-        // Manejar el cierre del modal de Alta de Canción
         window.cerrarAlta = cerrarAlta;
 
-        // Toast Notification Function
+        // Mostrar modal de confirmación para eliminar
+        window.eliminarCancion = function (id, nombre) {
+            idEliminar = id;
+            $("#eliminarInfo").text(`¿Desea eliminar la canción con ID ${id}: ${nombre}?`);
+            $("#modalEliminar").showModal();
+        };
+
+        // Confirmar eliminación
+        $('#confirmDelete').click(async function () {
+            if (idEliminar) {
+                try {
+                    const response = await $.ajax({
+                        type: 'POST',
+                        url: 'baja.php',
+                        data: { id: idEliminar }
+                    });
+
+                    if (response.trim() === "success") {
+                        showToast("Canción eliminada exitosamente");
+                        cargaTabla();
+                    } else {
+                        showToast(response);
+                    }
+                } catch (error) {
+                    showToast("Error al eliminar la canción");
+                }
+            }
+            $("#modalEliminar").close();
+        });
+
+       // Cancelar eliminación
+        $('#cancelDelete').click(function () {
+            $("#modalEliminar").close();
+            showToast("Acción cancelada");
+        });
+
+        // Función para mostrar notificaciones tipo "toast"
         function showToast(message) {
             const toast = $('#toast');
             toast.text(message).fadeIn();
@@ -87,28 +131,18 @@
         }
 
         // Cerrar sesión
-        $("#cerrarSesion").click(function() {
+        $("#cerrarSesion").click(function () {
             location.href = "../DestruirSesion.php";
         });
 
-        // Función para eliminar canción
-        function eliminarCancion(id) {
-            if (confirm("¿Estás seguro de que deseas eliminar esta canción?")) {
-                $.ajax({
-                    type: "POST",
-                    url: "baja.php",
-                    data: { id: id },
-                    success: function(response) {
-                        showToast(response);
-                        cargaTabla();
-                    },
-                    error: function() {
-                        showToast("Error al eliminar la canción.");
-                    }
-                });
-            }
+        // Función para cargar la tabla de canciones
+        function cargaTabla() {
+            $.get('./cancionesJSONPrepare.php', function (data) {
+                $('#tbDatos').html(data);
+            });
         }
+
+        cargaTabla();
     });
 </script>
-
 </html>
