@@ -7,10 +7,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
         $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+        // Captura y sanitización de datos
         $nombre = htmlspecialchars($_POST['Nombre'], ENT_QUOTES, 'UTF-8');
         $genero = filter_var($_POST['Genero'], FILTER_VALIDATE_INT);
         $artista = htmlspecialchars($_POST['Artista'], ENT_QUOTES, 'UTF-8');
-        $fecha = htmlspecialchars($_POST['Fecha'], ENT_QUOTES, 'UTF-8');
+        $fecha = $_POST['Fecha'];
         $contenidoPortada = null;
 
         if (empty($nombre) || empty($genero) || empty($artista) || empty($fecha)) {
@@ -18,10 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
             exit;
         }
 
+        // Procesar imagen de portada si existe
         if (!empty($_FILES['Portada']['tmp_name'])) {
             $contenidoPortada = file_get_contents($_FILES['Portada']['tmp_name']);
         }
 
+        // Insertar la canción en la base de datos
         $sql = 'INSERT INTO canciones (nombre, genero_id, artista, fecha_estreno, imagen_portada) VALUES (?, ?, ?, ?, ?)';
         $stmt = $conn->prepare($sql);
         $stmt->execute([$nombre, $genero, $artista, $fecha, $contenidoPortada]);
@@ -33,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
     exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">

@@ -45,20 +45,20 @@ function cargaTabla() {
                 const imagenPortada = cancion.imagen_portada ? `data:image/jpeg;base64,${cancion.imagen_portada}` : './img_no.jpeg';
                 const row = `
                 <tr>
-                    <td campo-dato='id'>${cancion.Id}</td>
-                    <td campo-dato='nombre'>${cancion.Nombre}</td>
-                    <td campo-dato='genero'>${cancion.Genero}</td>
-                    <td campo-dato='artista'>${cancion.Artista}</td>
-                    <td campo-dato='fecha'>${cancion.Fecha}</td>
-                    <td><img src="${imagenPortada}" alt="Portada" width="50" height="50"></td>
-                    <td campo-dato='acciones'>
-                        <button class="btnModificar" onclick="Modificar(${cancion.Id})">Modificar</button>
-                        <button class="btnEliminar" onclick="Borrar(${cancion.Id}, '${cancion.Nombre}')">Eliminar</button>
+                    <td>${cancion.ID}</td>
+                    <td>${cancion.nombre}</td>
+                    <td>${cancion.genero}</td>
+                    <td>${cancion.artista}</td>
+                    <td>${cancion.fecha_estreno}</td>
+                    <td><img src="${imagenPortada}" alt="Portada" width="50"></td>
+                    <td>
+                        <button class="btnModificar" onclick="Modificar(${cancion.ID})">Modificar</button>
+                        <button class="btnEliminar" onclick="Borrar(${cancion.ID}, '${cancion.nombre}')">Eliminar</button>
                     </td>
                 </tr>`;
                 $("#tbDatos").append(row);
             });
-            $("#totalRegistros").html("Nro de registros: " + objJson.canciones.length);
+            $("#totalRegistros").html(`Nro de registros: ${objJson.canciones.length}`);
         },
         error: function () {
             $("#tbDatos").empty();
