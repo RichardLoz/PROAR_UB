@@ -88,7 +88,7 @@
         window.cerrarAlta = cerrarAlta;
 
         // Mostrar modal de confirmación para eliminar
-        window.eliminarCancion = function (id, nombre) {
+        window.Borrar = function (id, nombre) {
             idEliminar = id;
             $("#eliminarInfo").text(`¿Desea eliminar la canción con ID ${id}: ${nombre}?`);
             $("#modalEliminar").showModal();
@@ -117,7 +117,7 @@
             $("#modalEliminar").close();
         });
 
-       // Cancelar eliminación
+        // Cancelar eliminación
         $('#cancelDelete').click(function () {
             $("#modalEliminar").close();
             showToast("Acción cancelada");
@@ -135,7 +135,7 @@
             location.href = "../DestruirSesion.php";
         });
 
-        // Función para cargar la tabla de canciones
+        // Cargar la tabla de canciones
         function cargaTabla() {
             $.get('./cancionesJSONPrepare.php', function (data) {
                 $('#tbDatos').html(data);
