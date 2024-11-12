@@ -30,25 +30,25 @@ function cargaTabla() {
         type: "GET",
         url: "./cancionesJSONPrepare.php",
         success: function (respuestaDelServer) {
-            console.log("Respuesta del servidor:", respuestaDelServer); // <-- Agregar esta línea
-            $("#tbDatos").empty();
+            console.log("Respuesta cruda del servidor:", respuestaDelServer); // <-- Verifica la respuesta cruda
 
             let objJson;
             try {
                 objJson = JSON.parse(respuestaDelServer);
+                console.log("Respuesta parseada:", objJson); // <-- Verifica la respuesta parseada
             } catch (error) {
                 console.error("Error al parsear JSON:", error);
                 showToast("Error al procesar la respuesta del servidor");
                 return;
             }
 
-            // Asegúrate de que `objJson.canciones` sea un array
             if (!objJson || !Array.isArray(objJson.canciones)) {
                 console.error("La respuesta no contiene un array válido:", objJson);
                 showToast("Error: Datos no válidos recibidos");
                 return;
             }
 
+            $("#tbDatos").empty();
             objJson.canciones.forEach(function (cancion) {
                 const imagenPortada = cancion.ImagenPortada ? `data:image/jpeg;base64,${cancion.ImagenPortada}` : './img_no.jpeg';
                 const row = `
@@ -71,10 +71,11 @@ function cargaTabla() {
         },
         error: function () {
             $("#tbDatos").empty();
-            alert("Error al cargar los datos");
+            showToast("Error al cargar los datos");
         }
     });
 }
+
 
 
 // Evento para cargar la tabla al hacer clic en el botón "Cargar Datos"
