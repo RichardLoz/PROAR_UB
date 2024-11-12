@@ -51,12 +51,12 @@ try {
     while ($fila = $stmt2->fetch(PDO::FETCH_ASSOC)) {
         $imagenPortada = $fila['imagen_portada'] ? base64_encode($fila['imagen_portada']) : null;
         $canciones[] = [
-            'ID' => $fila['ID'],
-            'nombre' => $fila['nombre'],
-            'genero' => $fila['genero'],
-            'artista' => $fila['artista'],
-            'fecha_estreno' => $fila['fecha_estreno'],
-            'imagen_portada' => $imagenPortada
+            'ID' => $fila['Id'],                 // Aquí el campo es 'ID'
+            'Nombre' => $fila['Nombre'],         // Aquí el campo es 'Nombre'
+            'Genero' => $fila['Genero'],         // Aquí el campo es 'Genero'
+            'Artista' => $fila['Artista'],       // Aquí el campo es 'Artista'
+            'Fecha' => $fila['Fecha'],           // Aquí el campo es 'Fecha'
+            'ImagenPortada' => $imagenPortada    // Aquí el campo es 'ImagenPortada'
         ];
     }
     echo json_encode(['canciones' => $canciones]);

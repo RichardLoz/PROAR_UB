@@ -44,16 +44,16 @@ function cargaTabla() {
             objJson.canciones.forEach(function (cancion) {
                 const imagenPortada = cancion.imagen_portada ? `data:image/jpeg;base64,${cancion.imagen_portada}` : './img_no.jpeg';
                 const row = `
-                <tr>
-                    <td>${cancion.ID}</td>
-                    <td>${cancion.nombre}</td>
-                    <td>${cancion.genero}</td>
-                    <td>${cancion.artista}</td>
-                    <td>${cancion.fecha_estreno}</td>
+<tr>
+                    <td>${cancion.ID}</td>                   <!-- 'ID' debe coincidir con PHP -->
+                    <td>${cancion.Nombre}</td>               <!-- 'Nombre' debe coincidir con PHP -->
+                    <td>${cancion.Genero}</td>               <!-- 'Genero' debe coincidir con PHP -->
+                    <td>${cancion.Artista}</td>              <!-- 'Artista' debe coincidir con PHP -->
+                    <td>${cancion.Fecha}</td>                <!-- 'Fecha' debe coincidir con PHP -->
                     <td><img src="${imagenPortada}" alt="Portada" width="50"></td>
                     <td>
                         <button class="btnModificar" onclick="Modificar(${cancion.ID})">Modificar</button>
-                        <button class="btnEliminar" onclick="Borrar(${cancion.ID}, '${cancion.nombre}')">Eliminar</button>
+                        <button class="btnEliminar" onclick="Borrar(${cancion.ID}, '${cancion.Nombre}')">Eliminar</button>
                     </td>
                 </tr>`;
                 $("#tbDatos").append(row);
