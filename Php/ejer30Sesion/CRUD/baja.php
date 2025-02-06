@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 
         // Si el ID no es válido, devolver un error
         if (!$Id) {
-            echo "Error: ID no válido.";
+            echo "Error: ID no válido. Recibido: " . $_POST['id'];
             exit;
         }
 
@@ -27,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
             if ($stmt->rowCount() > 0) {
                 echo "success"; // Eliminación exitosa
             } else {
-                echo "Error: No se encontró la canción para eliminar.";
+                // Mostrar error de depuración
+                 $errorInfo = $stmt->errorInfo();
+                 echo "Error: No se encontró la canción para eliminar. rowCount=" . $stmt->rowCount() . ". Info: " . print_r($errorInfo, true);
             }
         } else {
             echo "Error: No se pudo eliminar el registro.";
