@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $Id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
-        $sqlSelect = "SELECT id AS Id, nombre AS Nombre, genero_id AS Genero, artista AS Artista, fecha_estreno AS Fecha FROM canciones WHERE id = :ID";
+        $sqlSelect = "SELECT ID AS Id, nombre AS Nombre, genero_id AS Genero, artista AS Artista, fecha_estreno AS Fecha FROM canciones WHERE ID = :ID";
         $stmtSelect = $conn->prepare($sqlSelect);
         $stmtSelect->bindParam(':ID', $Id, PDO::PARAM_INT);
         $stmtSelect->execute();
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oculto'])) {
             $contenidoPortada = file_get_contents($_FILES['Portada']['tmp_name']);
         }
 
-        $sqlUpdate = "UPDATE canciones SET nombre = ?, genero_id = ?, artista = ?, fecha_estreno = ?, imagen_portada = ? WHERE id = ?";
+        $sqlUpdate = "UPDATE canciones SET nombre = ?, genero_id = ?, artista = ?, fecha_estreno = ?, imagen_portada = ? WHERE ID = ?";
         $stmtUpdate = $conn->prepare($sqlUpdate);
         $stmtUpdate->execute([$nombre, $genero, $artista, $fecha, $contenidoPortada, $Id]);
 

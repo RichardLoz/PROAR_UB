@@ -4,7 +4,7 @@ session_start(); // Inicia o reanuda la sesión
 // Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION['usuario'])) {
     // Si no existe la sesión, redirige a la página de acceso denegado
-    header("Location: No_session.php");
+    header("Location: ./No_session.php");
     exit();
 }
 ?>
