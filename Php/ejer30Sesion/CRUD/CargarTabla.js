@@ -49,7 +49,7 @@ function cargaTabla() {
       
                   const row = `
                 <tr>
-                    <td>${cancion.Id}</td>
+                    <td>${cancion.ID}</td>
                     <td>${cancion.nombre}</td>
                     <td>${cancion.genero}</td>
                     <td>${cancion.artista}</td>

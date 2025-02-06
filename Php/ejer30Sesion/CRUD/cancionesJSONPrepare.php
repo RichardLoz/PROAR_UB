@@ -51,7 +51,7 @@ try {
     while ($fila = $stmt2->fetch(PDO::FETCH_ASSOC)) {
         $imagenPortada = $fila['imagen_portada'] ? base64_encode($fila['imagen_portada']) : null;
         $canciones[] = [
-            'ID' => $fila['Id'],
+            'ID' => $fila['ID'],
             'nombre' => $fila['nombre'],
             'genero' => $fila['genero'],
             'artista' => $fila['artista'],
