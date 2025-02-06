@@ -49,15 +49,15 @@ function cargaTabla() {
       
                   const row = `
                 <tr>
-                    <td>${cancion.ID}</td>
+                    <td>${cancion.Id}</td>
                     <td>${cancion.nombre}</td>
                     <td>${cancion.genero}</td>
                     <td>${cancion.artista}</td>
                     <td>${cancion.fecha_estreno}</td>
                     <td><img src="${imagenPortada}" alt="Portada" width="50"></td>
                     <td>
-                        <button class="btnModificar" onclick="Modificar(${cancion.ID})">Modificar</button>
-                        <button class="btnEliminar" onclick="Borrar(${cancion.ID}, '${cancion.nombre}')">Eliminar</button>
+                        <button class="btnModificar" onclick="Modificar(${cancion.Id})">Modificar</button>
+                        <button class="btnEliminar" onclick="Borrar(${cancion.Id}, '${cancion.nombre}')">Eliminar</button>
                     </td>
                 </tr>`;
                 $("#tbDatos").append(row);
