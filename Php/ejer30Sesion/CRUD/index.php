@@ -50,6 +50,15 @@
                 <th campo-dato='png'>Portada</th>
                 <th campo-dato='acciones'>Acciones</th>
             </tr>
+            <tr id="FiltrosTR">
+                <td><input type="text" id="filterID"></td>
+                <td><input type="text" id="filterNombre"></td>
+                <td><select name="selection" id="filterGenero">
+                        <option value=""></option>
+                    </select></td>
+                <td><input type="text" id="filterArtista"></td>
+                <td><input type="date" id="filterFecha"></td>
+            </tr>
         </thead>
         <tbody id="tbDatos"></tbody>
     </table>
