@@ -37,7 +37,7 @@ try {
     $sql .= " ORDER BY " . $orden;
     $stmt2 = $dbh->prepare($sql);
 
-    $stmt2->bindParam(':Id', $filterId);
+    $stmt2->bindParam(':ID', $filterId);
     $stmt2->bindParam(':Nombre', $filterNombre);
     $stmt2->bindParam(':Artista', $filterArtista);
     $stmt2->bindParam(':Fecha', $filterFecha);
