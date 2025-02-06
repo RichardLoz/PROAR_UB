@@ -109,7 +109,7 @@
         // Mostrar modal de confirmación para eliminar
         window.Borrar = function (id, nombre) {
             idEliminar = id;
-            $("#eliminarInfo").text(`¿Desea eliminar la canción con ID ${id}: ${nombre}?`);
+            $("#eliminarInfo").text(`¿Desea eliminar la canción con ID ${iD}: ${nombre}?`);
             if (modalEliminar) {
                 modalEliminar.showModal();
             }
@@ -175,7 +175,7 @@
                             <td><img src="./img_no.jpeg" alt="Portada" width="50"></td>
                             <td>
                                 <button class="btnModificar" onclick="Modificar(${cancion.Id})">Modificar</button>
-                                <button class="btnEliminar" onclick="Borrar(${cancion.Id}, '${cancion.nombre}')">Eliminar</button>
+                                <button class="btnEliminar" onclick="Borrar(${cancion.ID}, '${cancion.nombre}')">Eliminar</button>
                             </td>
                         </tr>`;
                     });
