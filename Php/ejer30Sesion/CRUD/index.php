@@ -93,6 +93,19 @@
         }
         window.cerrarAlta = cerrarAlta;
 
+        $("#limpiarBtn").click(function () {
+        // Limpiar los campos de filtro
+        $("#filterID").val('');
+        $("#filterNombre").val('');
+        $("#filterGenero").val(''); // Para el select, dejar en blanco o en la opción por defecto
+        $("#filterArtista").val('');
+        $("#filterFecha").val('');
+        $("#order").val(''); // Si deseas limpiar también el campo de orden
+
+        cargaTabla();
+    });
+
+
         // Mostrar modal de confirmación para eliminar
         window.Borrar = function (id, nombre) {
             idEliminar = id;
