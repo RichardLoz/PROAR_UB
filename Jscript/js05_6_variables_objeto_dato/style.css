@@ -1,0 +1,211 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    padding: 30px 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+.page {
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Encabezado */
+.hero {
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    margin: 0 0 5px;
+    font-size: 26px;
+    color: #2c3e50;
+}
+
+.hero-sub {
+    margin: 0;
+    color: #777;
+}
+
+/* Cajas de contenido */
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    margin: 0 0 15px;
+    font-size: 18px;
+    color: #2c3e50;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.card-head .card-title {
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+
+.chip {
+    color: #555;
+    font-size: 14px;
+}
+
+/* Consignas */
+.consigna {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.consigna li {
+    margin-bottom: 6px;
+}
+
+/* Formulario */
+.grid-campos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.entrada {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 200px;
+}
+
+.entrada label {
+    margin-bottom: 4px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.entrada input {
+    padding: 7px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.entrada input:focus {
+    outline: none;
+    border-color: #2c7be5;
+}
+
+/* Botones */
+.acciones {
+    margin-top: 15px;
+}
+
+.acciones-centro {
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 8px 16px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #e0e0e0;
+}
+
+.btn-primario {
+    background-color: #2c7be5;
+    border-color: #2c7be5;
+    color: #fff;
+}
+
+.btn-primario:hover {
+    background-color: #1a68d1;
+}
+
+/* Mensaje de validación */
+.aviso {
+    min-height: 18px;
+    margin: 10px 0 0;
+    font-size: 14px;
+    color: #c0392b;
+}
+
+.aviso.ok {
+    color: #1e7e34;
+}
+
+/* Tabla */
+.tabla-wrap {
+    overflow-x: auto;
+}
+
+#tablaPersonas {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tablaPersonas th,
+#tablaPersonas td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#tablaPersonas th {
+    background-color: #f2f2f2;
+}
+
+#tablaPersonas tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Pie */
+.pie {
+    color: #888;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* Responsive: pantallas chicas */
+@media (max-width: 600px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .hero h1 {
+        font-size: 22px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    /* Los botones ocupan todo el ancho y se apilan */
+    .btn {
+        display: block;
+        width: 100%;
+        margin: 0 0 8px;
+    }
+
+    /* La tabla scrollea en lugar de aplastar las columnas */
+    #tablaPersonas {
+        min-width: 380px;
+    }
+}

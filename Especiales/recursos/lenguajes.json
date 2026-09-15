@@ -1,0 +1,9 @@
+{
+    "paradigmas": [
+      { "Paradigma": "Orientado a objetos" },
+      { "Paradigma": "Funcional" },
+      { "Paradigma": "Imperativa" },
+      { "Paradigma": "Declarativa" },
+      { "Paradigma": "Multiparadigma" }
+    ]
+  }

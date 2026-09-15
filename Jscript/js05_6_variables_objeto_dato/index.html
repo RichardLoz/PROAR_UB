@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Variables Objeto Dato</title>
+</head>
+<body>
+
+    <div class="page">
+
+        <header class="hero">
+            <h1>Variables de tipo Objeto</h1>
+            <p class="hero-sub">Alta y listado de empleados usando un arreglo de objetos de dato.</p>
+        </header>
+
+        <section class="card">
+            <h2 class="card-title">Consignas del ejercicio</h2>
+            <ol class="consigna">
+                <li>Declarar y hacer uso de objetos de dato (datos de tipo objeto)</li>
+                <li>Cargar de 2 personas en un array por programa</li>
+                <li>Dejar de usar la función prompt() para el ingreso de datos. Armar un contenedor para el ingreso de datos desde consola (solo inputs sin formulario)</li>
+                <li>Dejar de usar document.write() y escribir contenido dentro de un elemento html (puede ser un div)</li>
+                <li>Dos botones para llamar a dos funciones. Una para cargar un nuevo objeto de dato por teclado y otra para mostrar en formato de tabla el array completo de elementos con su longitud</li>
+                <li>Un tercer procedimiento para ocultar el elemento de presentación (usando el parámetro de estilo display:none).</li>
+            </ol>
+        </section>
+
+        <section class="card data">
+            <h2 class="card-title">Alta de Empleado</h2>
+            <div class="grid-campos">
+                <div class="entrada">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" placeholder="Ej. Pedro" autocomplete="off">
+                </div>
+                <div class="entrada">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" name="apellido" id="apellido" placeholder="Ej. De la Fuente" autocomplete="off">
+                </div>
+                <div class="entrada">
+                    <label for="nacimiento">Fecha de ingreso</label>
+                    <input type="date" name="nacimiento" id="nacimiento">
+                </div>
+            </div>
+            <div class="acciones">
+                <button type="button" id="crearPersona" class="btn btn-primario">Crear Empleado</button>
+            </div>
+            <p id="aviso" class="aviso" role="status"></p>
+        </section>
+
+        <div id="botones" class="acciones acciones-centro">
+            <button type="button" id="mostrar" class="btn">Listar Empleados</button>
+            <button type="button" id="ocultar" class="btn">Ocultar Empleados</button>
+        </div>
+
+        <section id="tabla" class="card">
+            <div class="card-head">
+                <h2 class="card-title">Lista de Empleados</h2>
+                <span class="chip">Longitud del arreglo: <strong id="long">0</strong></span>
+            </div>
+            <div class="tabla-wrap">
+                <table id="tablaPersonas" style="display: none;"></table>
+            </div>
+        </section>
+
+        <footer class="pie">Ricardo Lozano · Programación en Arquitectura Web · UB</footer>
+
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
