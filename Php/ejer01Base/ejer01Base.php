@@ -12,7 +12,7 @@
 <hr>
 
 <?php
-$mivariable = "valor1";
+$mivariable = "Feria Tecnológica 2026";
 
 echo "<h2> Todo el texto y/o HTML <span> entregado por el procesador PHP </span> usando la sentencia Echo </h2>";
 echo "<hr>";
@@ -34,31 +34,32 @@ echo "<hr>";
 
 echo "<h2> Arreglos : </h2>";
 
-$aTransporte = array("Auto", "Camion");
-echo "<p><span>\$aTransporte[0]</span> : $aTransporte[0]</p>";
-echo "<p><span>\$aTransporte[1]</span> : $aTransporte[1]</p>";
-echo "<p>Tipo de <span> \$aTransporte </span> : " . gettype($aTransporte) . "</p>";
+$aEquipos = array("Notebook", "Tablet");
+echo "<p><span>\$aEquipos[0]</span> : $aEquipos[0]</p>";
+echo "<p><span>\$aEquipos[1]</span> : $aEquipos[1]</p>";
+echo "<p>Tipo de <span> \$aEquipos </span> : " . gettype($aEquipos) . "</p>";
 
-array_push($aTransporte, "Avion", "Barco");
-echo "<h2>Se agregan por programa dos elementos al array</h2>";
-echo "<h2>Todos los elementos originales y agregados : </h2>";
-foreach ($aTransporte as $maquinas) {
-    echo "<ul><li>" . $maquinas . "</li></ul>";
+ $aEquipos[] = "Impresora 3D";
+ $aEquipos[] = "Robot educativo";
+echo "<h2>Se agregan dos equipos al arreglo</h2>";
+echo "<h2>Equipos disponibles en la feria:</h2>";
+foreach ($aEquipos as $equipo) {
+    echo "<ul><li>" . $equipo . "</li></ul>";
 }
 
-$ArrayPalabrasEspaniol = array("Hola", "Adios", "Casa");
-$ArrayPalabrasIngles = array("Hello", "Goodbye", "House");
-$ArrayPalabrasItaliano = array("Ciao", "Arrivederci", "Casa");
-$ArrayPalabrasFrances = array("Bonjour", "au revoir", "Maison");
+$ArrayPalabrasEspanol = array("Variable", "Valor", "Tipo");
+$ArrayPalabrasIngles = array("Variable", "Value", "Type");
+$ArrayPalabrasItaliano = array("Variabile", "Valore", "Tipo");
+$ArrayPalabrasFrances = array("Variable", "Valeur", "Type");
 
 $aDiccionarioBasico = [
-    $ArrayPalabrasEspaniol,
+    $ArrayPalabrasEspanol,
     $ArrayPalabrasIngles,
     $ArrayPalabrasItaliano,
     $ArrayPalabrasFrances,
 ];
 
-echo "<h2>Arreglo de dos dimensiones(diccionario)</h2>";
+echo "<h2>Arreglo de dos dimensiones: glosario de programación</h2>";
 echo "<h4>La variable \$aDiccionarioBasico tiene el siguiente tipo: array</h4>   ";
 
 echo "<table>";
@@ -66,7 +67,7 @@ echo "<tr>";
 echo "<th>Español</th><th>Inglés</th><th>Italiano</th><th>Francés</th>";
 echo "</tr>";
 
-for ($i = 0; $i < count($aDiccionarioBasico)-1; $i++) {
+for ($i = 0; $i < count($ArrayPalabrasEspanol); $i++) {
     echo "<tr>";
     foreach ($aDiccionarioBasico as $ArraydePalabras) {
         echo "<td>";
@@ -77,21 +78,21 @@ for ($i = 0; $i < count($aDiccionarioBasico)-1; $i++) {
 }
 
 echo "</table><br>";
-echo "<h3>También se puede declarar de esta manera \$aDiccionarioBasico[0][2]:"  . $aDiccionarioBasico[3][1] . "</h3>";
-echo "<h3>Cantidad de elementos del diccionario: <span>".count($aDiccionarioBasico) ."</span></h3>";
+echo "<h3>También se puede acceder con \$aDiccionarioBasico[0][2]: " . $aDiccionarioBasico[0][2] . "</h3>";
+echo "<h3>Cantidad de idiomas del glosario: <span>".count($aDiccionarioBasico) ."</span></h3>";
 echo "<br>";
 
-echo "<h1>Variables tipo arreglo asociativo </h1>";
-$renglonDeLiquidacion = ["legEmpleado" => "c0001", "periodoLiquidado" => "Enero de 2023", "salarioBasico" => 20000, "fechaIngr" => "02/04/2019"];
-echo "<h4>Legajo de empleado: " . $renglonDeLiquidacion['legEmpleado'] . "</h4>";
-echo "Legajo de empleado: " . ($renglonDeLiquidacion['legEmpleado']);
+echo "<h1>Arreglo asociativo: inscripción a la feria</h1>";
+$inscripcion = ["nombre" => "Lucía Gómez", "taller" => "Robótica", "entradas" => 2, "fecha" => "15/10/2026"];
+echo "<h4>Participante: " . $inscripcion['nombre'] . "</h4>";
+echo "Participante: " . ($inscripcion['nombre']);
 echo "<br>";
-echo "Salario básico de empleado: " . $renglonDeLiquidacion['salarioBasico'];
+echo "Taller elegido: " . $inscripcion['taller'];
 echo "<br>";
-echo "Fecha de ingreso: " . ($renglonDeLiquidacion['fechaIngr']);
+echo "Fecha de inscripción: " . ($inscripcion['fecha']);
 echo "<br>";
 
-echo "<h2>Expresiones aritméticas</h2>";
+echo "<h2>Expresiones aritméticas: presupuesto del taller</h2>";
 $y = 2;
 $x = 8;
 $z = $y + $x;

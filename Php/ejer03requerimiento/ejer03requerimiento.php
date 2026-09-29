@@ -3,29 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio02Inclusion</title>
+    <title>Ejercicio03Requerimiento</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <?php 
 require ("./require.php");
 
-echo "<h3>Valor de una variable incluida desde otro archivo: ". $numeroEjemplo . "</h3>";
+echo "<h2>Feria Tecnológica 2026</h2>";
+echo "<h3>Ejercicio de requerimiento (require). Número de ejemplo: ". $numeroEjemplo . "</h3>";
 echo "<table border='1'>";
-echo "<tr>";
-$contarProfesores = count($profesores);
-for ($i = 0; $i < $contarProfesores; $i++) {
-    echo "<tr>";
-    foreach ($profesores[$i] as $valor) {
-        echo "<td>";
-        echo $valor;
-        echo "</td>";
-    }
-    echo "</tr>";
+echo "<tr><th>Taller</th><th>Instructor/a</th></tr>";
+$cantidadTalleres = count($talleres);
+for ($i = 0; $i < $cantidadTalleres; $i++) {
+    echo "<tr><td>" . $talleres[$i][0] . "</td><td>" . $talleres[$i][1] . "</td></tr>";
 }
 echo "</table>";
 
-echo "<h4>La longitud del arreglo es de:  ". $contarProfesores . "</h4>"; 
+echo "<h4>Cantidad de talleres: " . $cantidadTalleres . "</h4>";
 ?>
 </body>
 </html>

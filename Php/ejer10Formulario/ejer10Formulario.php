@@ -5,7 +5,7 @@ echo "<html>
 </head>
 <body>
     <div class='container'>
-        <h2 class='form-title'>Formulario de Registro</h2>
+        <h2 class='form-title'>Formulario de Registro.</h2>
         <form action='respuesta_2.php' method='POST'>
             <div class='form-group'>
                 <label class='bold-text'>Nombre</label>
