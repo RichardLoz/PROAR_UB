@@ -9,11 +9,11 @@ echo "<html>
         <form action='respuesta_2.php' method='POST'>
             <div class='form-group'>
                 <label class='bold-text'>Nombre</label>
-                <input name ='nombre' type='text' required>
+                <input name ='nombre' type='text' placeholder='Ingresa tu nombre' required>
             </div>
             <div class='form-group'>
                 <label class='bold-text'>Apellido</label>
-                <input name ='apellido' type='text' required>
+                <input name ='apellido' type='text' placeholder='Ingresa tu apellido' required>
             </div>
             <div class='button-container'>
                 <button type='submit' class='button'>Enviar</button>

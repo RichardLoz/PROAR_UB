@@ -7,8 +7,17 @@ echo "<html>
 </head>
 <body>
   <div class='container'>
-    <p class='bold-text'>Nombre: $nombre</p>
-    <p class='bold-text'>Apellido: $apellido</p>
+    <h2 class='form-title'>Datos recibidos</h2>
+    <dl class='result-list'>
+      <div class='result-row'>
+        <dt class='result-label'>Nombre</dt>
+        <dd class='result-value'>$nombre</dd>
+      </div>
+      <div class='result-row'>
+        <dt class='result-label'>Apellido</dt>
+        <dd class='result-value'>$apellido</dd>
+      </div>
+    </dl>
     <div class='button-container'>
       <a href='ejer10Formulario.html' class='button'>Volver.</a>
     </div>
