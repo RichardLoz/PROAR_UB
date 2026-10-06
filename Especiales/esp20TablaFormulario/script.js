@@ -2,7 +2,7 @@
 const orden_compra = {
     renglones: [
       { "nro_orden": 1001, "codigo_producto": "PRD-001", "descripcion": "Aceite de girasol", "cantidad": 20, "unidad_medida": "Litro", "precio_unitario": 1850.50, "pdf_comprobante": "OC-1001.pdf" },
-      { "nro_orden": 1001, "codigo_producto": "PRD-002", "descripcion": "Harina 000", "cantidad": 50, "unidad_medida": "Kg", "precio_unitario": 920.00, "pdf_comprobante": "OC-1001.pdf" },
+      { "nro_orden": 1001, "codigo_producto": "PRD-002", "descripcion": "Gustavo 000", "cantidad": 50, "unidad_medida": "Kg", "precio_unitario": 920.00, "pdf_comprobante": "OC-1001.pdf" },
       { "nro_orden": 1001, "codigo_producto": "PRD-003", "descripcion": "Tomate triturado", "cantidad": 40, "unidad_medida": "Lata", "precio_unitario": 780.25, "pdf_comprobante": "OC-1001.pdf" },
       { "nro_orden": 1002, "codigo_producto": "PRD-004", "descripcion": "Fideos secos", "cantidad": 12, "unidad_medida": "Caja", "precio_unitario": 14500.00, "pdf_comprobante": "OC-1002.pdf" },
       { "nro_orden": 1002, "codigo_producto": "PRD-005", "descripcion": "Azúcar", "cantidad": 30, "unidad_medida": "Kg", "precio_unitario": 1100.00, "pdf_comprobante": "OC-1002.pdf" },
