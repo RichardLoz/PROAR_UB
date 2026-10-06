@@ -4,45 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <title>Form Variable Arreglo Objetos</title>
+    <title>Form Renglón de orden de compra</title>
 </head>
 <body>
 
     <header>
-        <h1>Formulario de ALTA - Lenguaje de programación</h1>
+        <h1>Formulario de ALTA - Renglón de orden de compra.</h1>
     </header>
 
     <main>
-        <form action="respuesta.html" method="get" id="formularioLenguaje">
+        <form action="respuesta.html" method="get" id="formularioRenglon">
 
             <div class="campo">
-                <label for="nombre">Nombre del lenguaje:</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Ej. JavaScript" required>
+                <label for="nro_orden">Nro de orden:</label>
+                <input type="number" id="nro_orden" name="nro_orden" min="1" placeholder="Ej. 1001" required>
             </div>
 
             <div class="campo">
-                <label for="paradigma">Paradigma:</label>
-                <select name="paradigma" id="paradigma" required></select>
+                <label for="codigo_producto">Código de producto:</label>
+                <input type="text" id="codigo_producto" name="codigo_producto" placeholder="Ej. PRD-001" required>
             </div>
 
             <div class="campo">
-                <label for="anio_aparicion">Año de aparición:</label>
-                <input type="number" id="anio_aparicion" name="anio_aparicion" min="1940" max="2030" placeholder="Ej. 1995" required>
+                <label for="descripcion">Descripción:</label>
+                <input type="text" id="descripcion" name="descripcion" placeholder="Ej. Aceite de girasol" required>
             </div>
 
             <div class="campo">
-                <label for="ranking">Puesto en el ranking TIOBE:</label>
-                <input type="number" id="ranking" name="ranking" min="1" placeholder="Ej. 6" required>
-            </div>
-
-            <div class="campo campo-check">
-                <input type="checkbox" id="tipado_estatico" name="tipado_estatico">
-                <label for="tipado_estatico">Tipado estático</label>
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" id="cantidad" name="cantidad" min="0" step="any" placeholder="Ej. 10" required>
             </div>
 
             <div class="campo">
-                <label for="fecha_ultima_version">Fecha de última versión:</label>
-                <input type="date" id="fecha_ultima_version" name="fecha_ultima_version" required>
+                <label for="unidad_medida">Unidad de medida:</label>
+                <select name="unidad_medida" id="unidad_medida" required></select>
+            </div>
+
+            <div class="campo">
+                <label for="precio_unitario">Precio unitario:</label>
+                <input type="number" id="precio_unitario" name="precio_unitario" min="0" step="0.01" placeholder="Ej. 1500.50" required>
+            </div>
+
+            <div class="campo">
+                <label for="importe_renglon">Importe del renglón:</label>
+                <input type="number" id="importe_renglon" name="importe_renglon" step="0.01" placeholder="Cantidad x Precio unitario" readonly>
+            </div>
+
+            <div class="campo">
+                <label for="pdf_comprobante">PDF comprobante (orden de compra):</label>
+                <input type="file" id="pdf_comprobante" name="pdf_comprobante" accept="application/pdf" required>
             </div>
 
             <button type="submit">Enviar</button>
@@ -51,7 +61,7 @@
     </main>
 
     <footer>
-        <p>© 2026 Catálogo de lenguajes - Rlozano</p>
+        <p>© 2026 Órdenes de compra - Rlozano</p>
     </footer>
 
     <script src="../recursos/jquery.js"></script>

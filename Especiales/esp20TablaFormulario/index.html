@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <title>Tabla Formulario Objetos</title>
+    <title>Renglones de órdenes de compra</title>
 </head>
 <body>
-    <h1>Listado de Motos</h1>
+    <h1>Renglones de órdenes de compra</h1>
     <div class="buttons">
         <button id="cargarDatos">Cargar Datos</button>
         <button id="vaciarDatos">Vaciar Datos</button>
@@ -18,13 +18,14 @@
         <table>
             <thead>
                 <tr>
-                    <th dataTabla='cod'>CodMoto</th>
-                    <th dataTabla='marca'>Marca</th>
-                    <th dataTabla='modelo'>Modelo</th>
-                    <th dataTabla='cilindrada'>Cilindrada</th>
-                    <th dataTabla='velocidad_maxima'>Velocidad Máxima</th>
-                    <th dataTabla='inyeccion'>Inyección</th>
-                    <th dataTabla='fecha_lanzamiento'>Fecha de Lanzamiento</th>
+                    <th dataTabla='nro_orden'>NroDeOrden</th>
+                    <th dataTabla='codigo_producto'>CodigoProducto</th>
+                    <th dataTabla='descripcion'>Descripcion</th>
+                    <th dataTabla='cantidad'>Cantidad</th>
+                    <th dataTabla='unidad_medida'>UnidadDeMedida</th>
+                    <th dataTabla='precio_unitario'>PrecioUnitario</th>
+                    <th dataTabla='importe_renglon'>ImporteRenglon</th>
+                    <th dataTabla='pdf_comprobante'>PdfComprobante</th>
                 </tr>
             </thead>
             <tbody id="tbody">
@@ -36,9 +37,14 @@
         Pie de página de la tabla
     </footer>
 
+    <dialog class="modal">
+        <button class="btn_cerrar">X</button>
+        <iframe src="../esp05FormVariableArregloDeObjetos/index.html" frameborder="0"></iframe>
+    </dialog>
+
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="../recursos/productos.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>

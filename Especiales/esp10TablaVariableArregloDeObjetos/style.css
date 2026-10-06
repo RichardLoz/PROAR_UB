@@ -70,19 +70,19 @@ footer {
 
 
 @media(max-width:1200px) {
-    [dataTabla='cod'] {
+    [dataTabla='pdf_comprobante'] {
         display: none;
     }
 }
 
 @media(max-width:900px) {
-    [dataTabla='marca'] {
+    [dataTabla='codigo_producto'] {
         display: none;
     }
 }
 
 @media(max-width:700px) {
-    [dataTabla='cilindrada'] {
+    [dataTabla='unidad_medida'] {
         display: none;
     }
 }

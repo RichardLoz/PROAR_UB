@@ -73,7 +73,7 @@ form {
 /* Estilo para los campos del formulario */
 input[type="text"],
 input[type="number"],
-input[type="date"],
+input[type="file"],
 select {
     padding: 8px;
     border: 1px solid #ccc;
@@ -150,4 +150,9 @@ footer p {
     form {
         padding: 18px;
     }
+}
+
+/* El importe se calcula solo: se ve como campo de solo lectura */
+input[readonly] {
+    background-color: #eee;
 }

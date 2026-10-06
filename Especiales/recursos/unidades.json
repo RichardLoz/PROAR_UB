@@ -1,0 +1,9 @@
+{
+  "unidades": [
+    { "Cod": "KG", "Unidad": "Kg", "Descripcion": "Kilogramo" },
+    { "Cod": "UNI", "Unidad": "Uni", "Descripcion": "Unidad" },
+    { "Cod": "LAT", "Unidad": "Lata", "Descripcion": "Lata" },
+    { "Cod": "CAJ", "Unidad": "Caja", "Descripcion": "Caja" },
+    { "Cod": "LTR", "Unidad": "Litro", "Descripcion": "Litro" }
+  ]
+}

@@ -25,7 +25,7 @@
         align-items: center;
         background-color: rgba(20, 212, 20, 0.808);
         padding: 1%;
-        font-size: 50px;
+        font-size: clamp(1.5rem, 5vw, 50px);
         box-sizing: border-box;
     }
 
@@ -70,4 +70,47 @@
     }
     .vacio {
         clear: both;
+    }
+
+    /* RWD */
+    @media (max-width: 700px) {
+        .container {
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+        }
+
+        header,
+        footer {
+            height: auto;
+        }
+
+        .principal {
+            flex-direction: column;
+            height: auto;
+        }
+
+        .opciones {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .opciones h2 {
+            width: 100%;
+        }
+
+        .botones {
+            flex: 1 1 40%;
+            padding: 12px;
+        }
+
+        .textos {
+            height: auto;
+            overflow: visible;
+            padding: 1em;
+        }
     }
