@@ -16,8 +16,8 @@
     </header>
 
     <main class="container">
-        <!-- Envio tradicional: method post + enctype multipart (necesario para subir el PDF) hacia respuesta.php -->
-        <form class="card" id="formRenglon" action="respuesta.php" method="post" enctype="multipart/form-data">
+        <!-- Envio tradicional: method post + enctype multipart (necesario para subir el PDF) hacia index.php -->
+        <form class="card" id="formRenglon" action="index.php" method="post" enctype="multipart/form-data">
             <h2>Alta de Renglon</h2>
 
             <!-- Grilla de 2 columnas; los campos con clase "ancho" ocupan toda la fila -->
@@ -64,7 +64,7 @@
             </div>
 
             <div class="botones">
-                <!-- Boton 1: submit normal del form, el navegador carga respuesta.php -->
+                <!-- Boton 1: submit normal del form, el navegador carga index.php -->
                 <button type="submit" class="btn btn-secundario">Enviar form de manera tradicional</button>
                 <!-- Boton 2: type=button para que NO envie el form; lo maneja jQuery con AJAX -->
                 <button type="button" class="btn btn-primario" id="enviarAjax">Disparar requerimiento asincronico AJAX</button>
