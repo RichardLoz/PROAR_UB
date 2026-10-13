@@ -14,68 +14,78 @@
     <header>
         <h1>Renglones de Ordenes de Compra</h1>
     </header>
-    <div class="container">
-        <button class="abrir">Alta Renglon</button>
-        <dialog class="modal">
-            <div class="primero"><button class="cerrar" type="button">X</button></div>
-            <!-- Envio tradicional: method post + enctype multipart (necesario para subir el PDF) hacia respuesta.php -->
-            <form class="segundo" id="formRenglon" action="respuesta.php" method="post" enctype="multipart/form-data">
-                <label for="nroOrden">Nro de Orden:</label><br>
-                <input type="number" name="nroOrden" id="nroOrden" min="1" required><br>
-                <label for="codigoProducto">Codigo de Producto:</label><br>
-                <input type="text" name="codigoProducto" id="codigoProducto" required><br>
-                <label for="descripcion">Descripcion:</label><br>
-                <input type="text" name="descripcion" id="descripcion" required><br>
-                <label for="cantidad">Cantidad:</label><br>
-                <input type="number" name="cantidad" id="cantidad" min="0" step="any" required><br>
-                <label for="unidadDeMedida">Unidad de Medida:</label><br>
-                <select name="unidadDeMedida" id="unidadDeMedida" required>
-                    <option value="1">1 - Kg</option>
-                    <option value="2">2 - Uni</option>
-                    <option value="3">3 - Lata</option>
-                    <option value="4">4 - Caja</option>
-                    <option value="5">5 - Litro</option>
-                </select><br>
-                <label for="precioUnitario">Precio Unitario:</label><br>
-                <input type="number" name="precioUnitario" id="precioUnitario" min="0" step="0.01" required><br>
-                <label for="importeRenglon">Importe Renglon:</label><br>
-                <!-- readonly (no disabled) para que el valor igual viaje en el envio -->
-                <input type="number" name="importeRenglon" id="importeRenglon" readonly><br>
-                <label for="pdfComprobante">PDF Comprobante (orden de compra):</label><br>
-                <input type="file" name="pdfComprobante" id="pdfComprobante" accept="application/pdf" required><br><br>
 
+    <main class="container">
+        <!-- Envio tradicional: method post + enctype multipart (necesario para subir el PDF) hacia respuesta.php -->
+        <form class="card" id="formRenglon" action="respuesta.php" method="post" enctype="multipart/form-data">
+            <h2>Alta de Renglon</h2>
+
+            <!-- Grilla de 2 columnas; los campos con clase "ancho" ocupan toda la fila -->
+            <div class="grilla">
+                <div class="campo">
+                    <label for="nroOrden">Nro de Orden</label>
+                    <input type="number" name="nroOrden" id="nroOrden" min="1" required>
+                </div>
+                <div class="campo">
+                    <label for="codigoProducto">Codigo de Producto</label>
+                    <input type="text" name="codigoProducto" id="codigoProducto" required>
+                </div>
+                <div class="campo ancho">
+                    <label for="descripcion">Descripcion</label>
+                    <input type="text" name="descripcion" id="descripcion" required>
+                </div>
+                <div class="campo">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="number" name="cantidad" id="cantidad" min="0" step="any" required>
+                </div>
+                <div class="campo">
+                    <label for="unidadDeMedida">Unidad de Medida</label>
+                    <select name="unidadDeMedida" id="unidadDeMedida" required>
+                        <option value="1">1 - Kg</option>
+                        <option value="2">2 - Uni</option>
+                        <option value="3">3 - Lata</option>
+                        <option value="4">4 - Caja</option>
+                        <option value="5">5 - Litro</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="precioUnitario">Precio Unitario</label>
+                    <input type="number" name="precioUnitario" id="precioUnitario" min="0" step="0.01" required>
+                </div>
+                <div class="campo">
+                    <label for="importeRenglon">Importe Renglon (cantidad x precio)</label>
+                    <!-- readonly (no disabled) para que el valor igual viaje en el envio -->
+                    <input type="number" name="importeRenglon" id="importeRenglon" readonly>
+                </div>
+                <div class="campo ancho">
+                    <label for="pdfComprobante">PDF Comprobante (orden de compra)</label>
+                    <input type="file" name="pdfComprobante" id="pdfComprobante" accept="application/pdf" required>
+                </div>
+            </div>
+
+            <div class="botones">
                 <!-- Boton 1: submit normal del form, el navegador carga respuesta.php -->
-                <button type="submit" class="enviar">enviar form de manera tradicional</button><br>
+                <button type="submit" class="btn btn-secundario">Enviar form de manera tradicional</button>
                 <!-- Boton 2: type=button para que NO envie el form; lo maneja jQuery con AJAX -->
-                <button type="button" class="enviar" id="enviarAjax">Disparar requerimiento asincronico AJAX</button>
+                <button type="button" class="btn btn-primario" id="enviarAjax">Disparar requerimiento asincronico AJAX</button>
+            </div>
+        </form>
+    </main>
 
-                <!-- Loader: oculto hasta que se dispara el AJAX -->
-                <div class="loader" id="loader" hidden></div>
-            </form>
-        </dialog>
-        <!-- Modal de resultado del AJAX -->
-        <dialog class="modal modalResultado" id="modalResultado">
-            <h2>Respuesta del servidor (JSON):</h2>
-            <table class="datos" id="tablaResultado"></table>
-            <br><button type="button" class="enviar" id="cerrarResultado">Cerrar</button>
-        </dialog>
+    <!-- Overlay de carga: tapa la pantalla mientras el servidor demora -->
+    <div class="overlay" id="overlay" hidden>
+        <div class="overlay-caja">
+            <div class="loader"></div>
+            <p>Procesando requerimiento...</p>
+            <small>Esperando respuesta del servidor</small>
+        </div>
     </div>
+
     <footer>
         <h1>Alumno: Ricardo Lozano</h1>
     </footer>
 
     <script>
-        const Modal = document.querySelector(".modal")
-        const Abrirmodal = document.querySelector(".abrir")
-        const Cerrarmodal = document.querySelector(".cerrar")
-        const ModalResultado = document.getElementById("modalResultado")
-
-        // Deja el formulario vacio (reset() tambien limpia el input file)
-        function limpiar() {
-            $("#formRenglon")[0].reset();
-            $("#importeRenglon").val("");
-        }
-
         // Importe = Cantidad x Precio Unitario, se recalcula al tipear
         function calcularImporte() {
             const importe = parseFloat($("#cantidad").val()) * parseFloat($("#precioUnitario").val());
@@ -83,26 +93,13 @@
         }
         $("#cantidad, #precioUnitario").on("input", calcularImporte);
 
-        Abrirmodal.addEventListener("click", () => {
-            Modal.showModal();
-        })
-        Cerrarmodal.addEventListener("click", () => {
-            limpiar();
-            Modal.close();
-        });
-        $("#cerrarResultado").click(function () {
-            ModalResultado.close();
-            limpiar();
-            Modal.close();
-        });
-
         // Envio asincronico: no recarga la pagina, el servidor demora 3 segundos
         $("#enviarAjax").click(function () {
             const form = $("#formRenglon")[0];
             // Como el boton no es submit, validamos a mano los campos required
             if (!form.reportValidity()) return;
 
-            $("#loader").show();                       // muestra el loader
+            $("#overlay").show();                      // muestra el loader
             $("#enviarAjax").prop("disabled", true);   // evita doble click mientras espera
 
             $.ajax({
@@ -113,19 +110,16 @@
                 contentType: false,
                 dataType: "json",          // parsea la respuesta JSON
                 success: function (renglon) {
-                    // Arma una fila por cada campo del JSON
-                    $("#tablaResultado").empty();
-                    $.each(renglon, function (campo, valor) {
-                        $("#tablaResultado").append($("<tr>").append($("<th>").text(campo), $("<td>").text(valor)));
-                    });
-                    ModalResultado.showModal();
+                    $("#overlay").hide();
+                    // alert bloquea, por eso se oculta el loader antes de mostrarlo
+                    alert(JSON.stringify(renglon, null, 2)); // JSON indentado
                 },
                 error: function () {
+                    $("#overlay").hide();
                     alert("Error al procesar el requerimiento");
                 },
                 complete: function () {
-                    // Se ejecuta siempre (exito o error): oculta loader y rehabilita el boton
-                    $("#loader").hide();
+                    // Se ejecuta siempre (exito o error): rehabilita el boton
                     $("#enviarAjax").prop("disabled", false);
                 }
             });

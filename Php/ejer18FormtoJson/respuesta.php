@@ -16,17 +16,16 @@ include "renglon.php";
     <header>
         <h1>Renglon recibido (envio tradicional)</h1>
     </header>
-    <div class="container">
-        <table class="datos">
-            <?php foreach ($Renglon as $campo => $valor) { ?>
-                <tr>
-                    <th><?php echo htmlspecialchars($campo); ?></th>
-                    <td><?php echo htmlspecialchars($valor); ?></td>
-                </tr>
-            <?php } ?>
-        </table>
-    </div>
-    <div class="container"><a class="abrir" href="ejer18FormtoJson.html">Volver</a></div>
+    <main class="container">
+        <div class="card">
+            <h2>Respuesta (JSON)</h2>
+            <!-- JSON_PRETTY_PRINT lo indenta; htmlspecialchars evita interpretar el contenido como HTML -->
+            <pre class="json"><?php echo htmlspecialchars(json_encode($Renglon, JSON_PRETTY_PRINT)); ?></pre>
+            <div class="botones">
+                <a class="btn btn-primario" href="ejer18FormtoJson.html">Volver</a>
+            </div>
+        </div>
+    </main>
     <footer>
         <h1>Alumno: Ricardo Lozano</h1>
     </footer>
