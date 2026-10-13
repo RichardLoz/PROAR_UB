@@ -112,3 +112,52 @@ label {
     font-size: 16px;
     margin: 5px 0;
 }
+
+/* Loader (spinner) del requerimiento asincronico */
+.loader {
+    margin: 15px auto 0;
+    width: 40px;
+    height: 40px;
+    border: 5px solid #2C2C2C;
+    border-top-color: #64FFDA;
+    border-radius: 50%;
+    animation: girar 1s linear infinite;
+}
+
+.loader[hidden] {
+    display: none;
+}
+
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
+
+/* Tabla de datos (modal de resultado y respuesta.php) */
+.datos {
+    border-collapse: collapse;
+    min-width: 300px;
+}
+
+.datos th, .datos td {
+    padding: 8px 12px;
+    border: 1px solid #64FFDA;
+    text-align: left;
+}
+
+.datos th {
+    color: #64FFDA;
+}
+
+.modalResultado {
+    height: auto;
+    width: 40vw;
+}
+
+/* Boton de volver (link) en respuesta.php */
+a.abrir {
+    text-decoration: none;
+}
+
+.segundo .enviar {
+    margin-bottom: 8px;
+}

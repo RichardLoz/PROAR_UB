@@ -17,8 +17,9 @@
     <div class="container">
         <button class="abrir">Alta Renglon</button>
         <dialog class="modal">
-            <div class="primero"><button class="cerrar">X</button></div>
-            <div class="segundo">
+            <div class="primero"><button class="cerrar" type="button">X</button></div>
+            <!-- Envio tradicional: method post + enctype multipart (necesario para subir el PDF) hacia respuesta.php -->
+            <form class="segundo" id="formRenglon" action="respuesta.php" method="post" enctype="multipart/form-data">
                 <label for="nroOrden">Nro de Orden:</label><br>
                 <input type="number" name="nroOrden" id="nroOrden" min="1" required><br>
                 <label for="codigoProducto">Codigo de Producto:</label><br>
@@ -38,12 +39,25 @@
                 <label for="precioUnitario">Precio Unitario:</label><br>
                 <input type="number" name="precioUnitario" id="precioUnitario" min="0" step="0.01" required><br>
                 <label for="importeRenglon">Importe Renglon:</label><br>
+                <!-- readonly (no disabled) para que el valor igual viaje en el envio -->
                 <input type="number" name="importeRenglon" id="importeRenglon" readonly><br>
                 <label for="pdfComprobante">PDF Comprobante (orden de compra):</label><br>
-                <input type="file" name="pdfComprobante" id="pdfComprobante" accept="application/pdf" required><br><br><br>
-                <button class="enviar">Enviar</button>
-                <div class="procesar"></div>
-            </div>
+                <input type="file" name="pdfComprobante" id="pdfComprobante" accept="application/pdf" required><br><br>
+
+                <!-- Boton 1: submit normal del form, el navegador carga respuesta.php -->
+                <button type="submit" class="enviar">enviar form de manera tradicional</button><br>
+                <!-- Boton 2: type=button para que NO envie el form; lo maneja jQuery con AJAX -->
+                <button type="button" class="enviar" id="enviarAjax">Disparar requerimiento asincronico AJAX</button>
+
+                <!-- Loader: oculto hasta que se dispara el AJAX -->
+                <div class="loader" id="loader" hidden></div>
+            </form>
+        </dialog>
+        <!-- Modal de resultado del AJAX -->
+        <dialog class="modal modalResultado" id="modalResultado">
+            <h2>Respuesta del servidor (JSON):</h2>
+            <table class="datos" id="tablaResultado"></table>
+            <br><button type="button" class="enviar" id="cerrarResultado">Cerrar</button>
         </dialog>
     </div>
     <footer>
@@ -54,20 +68,15 @@
         const Modal = document.querySelector(".modal")
         const Abrirmodal = document.querySelector(".abrir")
         const Cerrarmodal = document.querySelector(".cerrar")
+        const ModalResultado = document.getElementById("modalResultado")
 
+        // Deja el formulario vacio (reset() tambien limpia el input file)
         function limpiar() {
-            $(".procesar").empty();
-            $("#nroOrden").val("");
-            $("#codigoProducto").val("");
-            $("#descripcion").val("");
-            $("#cantidad").val("");
-            $("#unidadDeMedida").val("1");
-            $("#precioUnitario").val("");
+            $("#formRenglon")[0].reset();
             $("#importeRenglon").val("");
-            $("#pdfComprobante").val("");
         }
 
-        // Importe = Cantidad x Precio Unitario
+        // Importe = Cantidad x Precio Unitario, se recalcula al tipear
         function calcularImporte() {
             const importe = parseFloat($("#cantidad").val()) * parseFloat($("#precioUnitario").val());
             $("#importeRenglon").val(isNaN(importe) ? "" : importe.toFixed(2));
@@ -81,38 +90,45 @@
             limpiar();
             Modal.close();
         });
+        $("#cerrarResultado").click(function () {
+            ModalResultado.close();
+            limpiar();
+            Modal.close();
+        });
 
+        // Envio asincronico: no recarga la pagina, el servidor demora 3 segundos
+        $("#enviarAjax").click(function () {
+            const form = $("#formRenglon")[0];
+            // Como el boton no es submit, validamos a mano los campos required
+            if (!form.reportValidity()) return;
 
-        $(".enviar").click(function () {
-            if (confirm("Desea enviar estos datos?")) {
-                $(".procesar").empty(); //vacia el cuadro de procesar.
-                $(".procesar").addClass("estiloRecibiendo"); //le cambia provisorio de estilo del contenedor
-                $(".procesar").html("<h1>Esperando respuesta ..</h1>");//Escribe mensaje provisorio
+            $("#loader").show();                       // muestra el loader
+            $("#enviarAjax").prop("disabled", true);   // evita doble click mientras espera
 
-                const datos = new FormData();
-                datos.append("nroOrden", $("#nroOrden").val());
-                datos.append("codigoProducto", $("#codigoProducto").val());
-                datos.append("descripcion", $("#descripcion").val());
-                datos.append("cantidad", $("#cantidad").val());
-                datos.append("unidadDeMedida", $("#unidadDeMedida").val());
-                datos.append("precioUnitario", $("#precioUnitario").val());
-                datos.append("importeRenglon", $("#importeRenglon").val());
-                datos.append("pdfComprobante", $("#pdfComprobante")[0].files[0]);
-
-                $.ajax({
-                    type: "post",
-                    url: "./index.php",
-                    data: datos,
-                    processData: false, // necesario para enviar FormData con archivo
-                    contentType: false,
-                    success: function (respuestaDelServer) {
-                        $(".procesar").removeClass("estiloRecibiendo");
-                        $(".procesar").html("<h1>Resultado de la transformacion a JSON en el servidor: </h1><br><h2>" + respuestaDelServer + "</h2>");
-                    }
-                }); //cierra ajax
-            } else {
-                limpiar();
-            };
+            $.ajax({
+                type: "post",
+                url: "./index.php",
+                data: new FormData(form),  // incluye el PDF
+                processData: false,        // necesario para enviar FormData con archivo
+                contentType: false,
+                dataType: "json",          // parsea la respuesta JSON
+                success: function (renglon) {
+                    // Arma una fila por cada campo del JSON
+                    $("#tablaResultado").empty();
+                    $.each(renglon, function (campo, valor) {
+                        $("#tablaResultado").append($("<tr>").append($("<th>").text(campo), $("<td>").text(valor)));
+                    });
+                    ModalResultado.showModal();
+                },
+                error: function () {
+                    alert("Error al procesar el requerimiento");
+                },
+                complete: function () {
+                    // Se ejecuta siempre (exito o error): oculta loader y rehabilita el boton
+                    $("#loader").hide();
+                    $("#enviarAjax").prop("disabled", false);
+                }
+            });
         });
     </script>
 </body>
