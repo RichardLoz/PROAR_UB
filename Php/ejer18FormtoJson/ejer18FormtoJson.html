@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Alta de Siniestro</title>
+    <title>Renglones de Ordenes de Compra</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -12,28 +12,35 @@
 
 <body>
     <header>
-        <h1>Alta de Siniestro</h1>
+        <h1>Renglones de Ordenes de Compra</h1>
     </header>
     <div class="container">
-        <button class="abrir">Alta Siniestro</button>
+        <button class="abrir">Alta Renglon</button>
         <dialog class="modal">
             <div class="primero"><button class="cerrar">X</button></div>
             <div class="segundo">
-                <label for="nombre">Nombre:</label><br>
-                <input type="text" name="nombre" id="nombre" required><br>
-                <label for="apellido">Apellido:</label><br>
-                <input type="text" name="apellido" id="apellido" required><br>
-                <label for="edad">Edad:</label><br>
-                <input type="number" name="edad" id="edad" required><br>
-                <label for="seguro">Seguro:</label><br>
-                <select name="seguro" id="seguro" required>
-                    <option value="Sura">Sura</option>
-                    <option value="Orbis">Orbis</option>
-                    <option value="La Segunda">La Segunda</option>
-                    <option value="UB Seguros">UB Seguros</option>
+                <label for="nroOrden">Nro de Orden:</label><br>
+                <input type="number" name="nroOrden" id="nroOrden" min="1" required><br>
+                <label for="codigoProducto">Codigo de Producto:</label><br>
+                <input type="text" name="codigoProducto" id="codigoProducto" required><br>
+                <label for="descripcion">Descripcion:</label><br>
+                <input type="text" name="descripcion" id="descripcion" required><br>
+                <label for="cantidad">Cantidad:</label><br>
+                <input type="number" name="cantidad" id="cantidad" min="0" step="any" required><br>
+                <label for="unidadDeMedida">Unidad de Medida:</label><br>
+                <select name="unidadDeMedida" id="unidadDeMedida" required>
+                    <option value="1">1 - Kg</option>
+                    <option value="2">2 - Uni</option>
+                    <option value="3">3 - Lata</option>
+                    <option value="4">4 - Caja</option>
+                    <option value="5">5 - Litro</option>
                 </select><br>
-                <label for="fecha_siniestro">Fecha de Siniestro:</label><br>
-                <input type="date" name="fecha_siniestro" id="fecha_siniestro" required><br><br><br>
+                <label for="precioUnitario">Precio Unitario:</label><br>
+                <input type="number" name="precioUnitario" id="precioUnitario" min="0" step="0.01" required><br>
+                <label for="importeRenglon">Importe Renglon:</label><br>
+                <input type="number" name="importeRenglon" id="importeRenglon" readonly><br>
+                <label for="pdfComprobante">PDF Comprobante (orden de compra):</label><br>
+                <input type="file" name="pdfComprobante" id="pdfComprobante" accept="application/pdf" required><br><br><br>
                 <button class="enviar">Enviar</button>
                 <div class="procesar"></div>
             </div>
@@ -48,18 +55,31 @@
         const Abrirmodal = document.querySelector(".abrir")
         const Cerrarmodal = document.querySelector(".cerrar")
 
+        function limpiar() {
+            $(".procesar").empty();
+            $("#nroOrden").val("");
+            $("#codigoProducto").val("");
+            $("#descripcion").val("");
+            $("#cantidad").val("");
+            $("#unidadDeMedida").val("1");
+            $("#precioUnitario").val("");
+            $("#importeRenglon").val("");
+            $("#pdfComprobante").val("");
+        }
+
+        // Importe = Cantidad x Precio Unitario
+        function calcularImporte() {
+            const importe = parseFloat($("#cantidad").val()) * parseFloat($("#precioUnitario").val());
+            $("#importeRenglon").val(isNaN(importe) ? "" : importe.toFixed(2));
+        }
+        $("#cantidad, #precioUnitario").on("input", calcularImporte);
+
         Abrirmodal.addEventListener("click", () => {
             Modal.showModal();
         })
         Cerrarmodal.addEventListener("click", () => {
-            $(".procesar").empty();
-            $("#nombre").val("");
-            $("#apellido").val("");
-            $("#edad").val("");
-            $("#seguro").val("");
-            $("#fecha_siniestro").val("");
+            limpiar();
             Modal.close();
-
         });
 
 
@@ -68,28 +88,30 @@
                 $(".procesar").empty(); //vacia el cuadro de procesar.
                 $(".procesar").addClass("estiloRecibiendo"); //le cambia provisorio de estilo del contenedor
                 $(".procesar").html("<h1>Esperando respuesta ..</h1>");//Escribe mensaje provisorio
+
+                const datos = new FormData();
+                datos.append("nroOrden", $("#nroOrden").val());
+                datos.append("codigoProducto", $("#codigoProducto").val());
+                datos.append("descripcion", $("#descripcion").val());
+                datos.append("cantidad", $("#cantidad").val());
+                datos.append("unidadDeMedida", $("#unidadDeMedida").val());
+                datos.append("precioUnitario", $("#precioUnitario").val());
+                datos.append("importeRenglon", $("#importeRenglon").val());
+                datos.append("pdfComprobante", $("#pdfComprobante")[0].files[0]);
+
                 $.ajax({
                     type: "post",
                     url: "./index.php",
-                    data: { 
-                        nombre: $("#nombre").val(), 
-                        apellido: $("#apellido").val(), 
-                        edad: $("#edad").val(), 
-                        seguro: $("#seguro").val(),
-                        fecha_siniestro: $("#fecha_siniestro").val() 
-                    },
+                    data: datos,
+                    processData: false, // necesario para enviar FormData con archivo
+                    contentType: false,
                     success: function (respuestaDelServer) {
                         $(".procesar").removeClass("estiloRecibiendo");
                         $(".procesar").html("<h1>Resultado de la transformacion a JSON en el servidor: </h1><br><h2>" + respuestaDelServer + "</h2>");
                     }
                 }); //cierra ajax
             } else {
-                $(".procesar").empty();
-                $("#nombre").val("");
-                $("#apellido").val("");
-                $("#edad").val("");
-                $("#seguro").val("");
-                $("#fecha_siniestro").val("");
+                limpiar();
             };
         });
     </script>
