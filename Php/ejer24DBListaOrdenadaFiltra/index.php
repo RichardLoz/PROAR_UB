@@ -7,161 +7,175 @@
     <link rel="stylesheet" href="./style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <title>ejer24DBListaOrdenadaFiltra_UB_MUSIC</title>
+    <title>ejer24DBListaOrdenadaFiltra_Renglones_OC</title>
 </head>
 
 <body>
+    <!-- Encabezado: título y controles (campo de orden y botones) -->
     <div class="head">
         <header>
-            <h3>Canciones UB-MUSIC</h3>
+            <h3>Renglones de órdenes de compra</h3>
         </header>
         <div class="command">
+            <!-- Acá se escribe (o se completa con los botones de columna) el campo por el que se ordena -->
             <p>Orden</p>
-            <input type="text" id="order"></input>
+            <input type="text" id="order">
             <button id="cargar">Cargar Datos</button>
             <button id="vaciar">Vaciar Datos</button>
         </div>
     </div>
     <table style="width: 100%;">
         <thead>
+            <!-- Fila de títulos: cada botón carga su columna en el campo "Orden" -->
             <tr>
-                <th campo-dato='id'><button id="btnID">Id</button></th>
-                <th campo-dato='nombre'><button id="btnNombre">Nombre</button></th>
-                <th campo-dato='genero_id'><button id="btnGenero">Género</button></th>
-                <th campo-dato='artista'><button id="btnArtista">Artista</button></th>
-                <th campo-dato='fecha_estreno'><button id="btnFecha">Fecha de Estreno</button></th>
+                <th campo-dato='nro_orden'><button id="btnNroOrden">Nro. de Orden</button></th>
+                <th campo-dato='codigo_producto'><button id="btnCodigo">Código Producto</button></th>
+                <th campo-dato='descripcion'><button id="btnDescripcion">Descripción</button></th>
+                <th campo-dato='cantidad'><button id="btnCantidad">Cantidad</button></th>
+                <th campo-dato='cod_unidad'><button id="btnUnidad">Unidad de Medida</button></th>
+                <th campo-dato='precio_unitario'><button id="btnPrecio">Precio Unitario</button></th>
+                <th campo-dato='importe_renglon'><button id="btnImporte">Importe Renglón</button></th>
+                <th>Imagen</th>
             </tr>
+            <!-- Fila de filtros: texto para nro/código/descripción y desplegable para unidad -->
             <tr id="FiltrosTR">
-                <td><input type="text" id="filterID"></td>
-                <td><input type="text" id="filterNombre"></td>
-                <td><select name="selection" id="filterGenero">
+                <td><input type="text" id="filterNroOrden"></td>
+                <td><input type="text" id="filterCodigo"></td>
+                <td><input type="text" id="filterDescripcion"></td>
+                <td></td>
+                <td><select name="selection" id="filterUnidad">
                         <option value=""></option>
                     </select></td>
-                <td><input type="text" id="filterArtista"></td>
-                <td><input type="date" id="filterFecha"></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
         </thead>
+        <!-- Acá el JS inserta las filas que llegan del servidor -->
         <tbody id="tbDatos"></tbody>
         <tfoot>
-            <th campo-dato='id'>TId</th>
-            <th campo-dato='nombre'>TNombre</th>
-            <th campo-dato='genero_id'>TGénero</th>
-            <th campo-dato='artista'>TArtista</th>
-            <th campo-dato='fecha_estreno'>TFecha de Estreno</th>
+            <th>Nro. de Orden</th>
+            <th>Código Producto</th>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Unidad de Medida</th>
+            <th>Precio Unitario</th>
+            <th>Importe Renglón</th>
+            <th>Imagen</th>
         </tfoot>
     </table>
+    <!-- Pie: cantidad de registros mostrados -->
     <footer><span id="totalRegistros"></span> Registros</footer>
 </body>
 <script>
+    // Escapa HTML: convierte caracteres como < o > en texto seguro (evita inyectar código en la tabla)
+    function esc(texto) {
+        return $("<div>").text(texto ?? "").html();
+    }
 
-$("#cargar").click(function () {
-    // Imprimir el valor del género para depurar
-    console.log("Genero seleccionado:", $("#filterGenero").val());
-    cargaTabla();
-});
+    // Formatea números al estilo argentino con 2 decimales: 1234.5 -> 1.234,50
+    function formatoMoneda(valor) {
+        return Number(valor).toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
 
-
+    // Se ejecuta cuando la página termina de cargar
     $(document).ready(function () {
         $("#order").val("");
+        // Pedir al servidor las unidades de medida y llenar el select del filtro.
+        // Unidades de medida parametrizables (cod-unidad descripción)
         $.ajax({
-            url: './desplegables.php', // Aquí se obtienen los géneros
+            url: './desplegables.php',
             type: 'GET',
             success: function (response) {
-                var generos = response;
-                generosJson = JSON.parse(generos);
-                console.log(generosJson);
-                var select = $('#filterGenero');
+                // El servidor responde texto JSON; se convierte a objeto
+                var unidadesJson = JSON.parse(response);
+                var select = $('#filterUnidad');
                 select.empty();
                 select.append('<option value="">Selecciona</option>');
-                generosJson.generos.forEach(function (item) {
-                    select.append('<option value="' + item.id_genero + '">' + item.genero + '</option>');
+                // Una opción por unidad, con formato "cod-unidad descripción"
+                unidadesJson.unidades.forEach(function (item) {
+                    select.append('<option value="' + esc(item.cod_unidad) + '">' + esc(item.cod_unidad) + ' ' + esc(item.descripcion) + '</option>');
                 });
             }
-        })
+        });
+
+        // Cada botón de título escribe el nombre de su columna en el campo "Orden"
+        $("#btnNroOrden").click(function () { $("#order").val("nro_orden"); });
+        $("#btnCodigo").click(function () { $("#order").val("codigo_producto"); });
+        $("#btnDescripcion").click(function () { $("#order").val("descripcion"); });
+        $("#btnCantidad").click(function () { $("#order").val("cantidad"); });
+        $("#btnUnidad").click(function () { $("#order").val("cod_unidad"); });
+        $("#btnPrecio").click(function () { $("#order").val("precio_unitario"); });
+        $("#btnImporte").click(function () { $("#order").val("importe_renglon"); });
     });
 
+    // Pide los renglones al servidor (con filtros y orden) y dibuja la tabla
     function cargaTabla() {
-    $("#tbDatos").empty(); // Limpiar tabla
-    $("#tbDatos").html("<p>Esperando respuesta... <span class='loader'></span></p>"); // Mostrar mensaje y loader
-    
-    $.ajax({
-        type: "GET",
-        url: "./cancionesJSONPrepare.php",
-        data: {
-            orden: $("#order").val(),
-            filterID: $("#filterID").val(),
-            filterNombre: $("#filterNombre").val(),
-            filterGenero: $("#filterGenero").val(),
-            filterArtista: $("#filterArtista").val(),
-            filterFecha: $("#filterFecha").val()
-        },
-        success: function (respuestaDelServer) {
-            $("#tbDatos").empty(); // Limpiar tabla una vez que se reciben los datos
-            var tdatos = $("#tbDatos");
-            console.log(respuestaDelServer);
-            objJson = JSON.parse(respuestaDelServer);
-            objJson.canciones.forEach(function (cancion) {
-                var row = document.createElement("tr");
-                row.innerHTML = `
-                <td campo-dato='id'> ${cancion.Id} </td>
-                <td campo-dato='nombre'> ${cancion.Nombre} </td>
-                <td campo-dato='genero'> ${cancion.Genero} </td>
-                <td campo-dato='artista'> ${cancion.Artista} </td>
-                <td campo-dato='fecha_estreno'> ${cancion.Fecha} </td>`;
-                $("#tbDatos").append(row);
-            });
-            $("#totalRegistros").html("Nro de registros: " + objJson.canciones.length);
-        },
-        error: function () {
-            $("#tbDatos").empty(); // Limpiar la tabla si ocurre un error
-            alert("Error al cargar los datos");
-        }
-    });
-}
+        $("#tbDatos").html("<p>Esperando respuesta... <span class='loader'></span></p>");
 
+        $.ajax({
+            type: "GET",
+            url: "./renglonesJSONPrepare.php",
+            // Parámetros que viajan por GET al PHP
+            data: {
+                orden: $("#order").val(),
+                filterNroOrden: $("#filterNroOrden").val(),
+                filterCodigo: $("#filterCodigo").val(),
+                filterDescripcion: $("#filterDescripcion").val(),
+                filterUnidad: $("#filterUnidad").val()
+            },
+            // Si el servidor responde bien:
+            success: function (respuestaDelServer) {
+                $("#tbDatos").empty();
+                var objJson = JSON.parse(respuestaDelServer);
+                // Si el PHP devolvió un error, mostrarlo y cortar
+                if (objJson.error) {
+                    alert(objJson.error);
+                    return;
+                }
+                // Por cada renglón se crea una fila <tr> y se agrega a la tabla
+                objJson.renglones.forEach(function (r) {
+                    // Miniatura de la imagen del producto (clic = abrir en grande); "-" si no tiene
+                    var img = r.PdfImagen
+                        ? "<a href='" + esc(r.PdfImagen) + "' target='_blank'><img src='" + esc(r.PdfImagen) + "' alt='" + esc(r.CodigoProducto) + "' class='thumb'></a>"
+                        : "-";
+                    var row = document.createElement("tr");
+                    row.innerHTML = `
+                    <td campo-dato='nro_orden'> ${esc(r.NroOrden)} </td>
+                    <td campo-dato='codigo_producto'> ${esc(r.CodigoProducto)} </td>
+                    <td campo-dato='descripcion'> ${esc(r.Descripcion)} </td>
+                    <td campo-dato='cantidad'> ${formatoMoneda(r.Cantidad)} </td>
+                    <td campo-dato='unidad'> ${esc(r.Unidad)} </td>
+                    <td campo-dato='precio_unitario'> ${formatoMoneda(r.PrecioUnitario)} </td>
+                    <td campo-dato='importe_renglon'> ${formatoMoneda(r.ImporteRenglon)} </td>
+                    <td campo-dato='pdf_imagen'> ${img} </td>`;
+                    $("#tbDatos").append(row);
+                });
+                $("#totalRegistros").html("Nro de registros: " + objJson.cuenta);
+            },
+            // Si falla la comunicación con el servidor:
+            error: function () {
+                $("#tbDatos").empty();
+                alert("Error al cargar los datos");
+            }
+        });
+    }
 
+    // Botón "Cargar Datos"
     $("#cargar").click(function () {
-        cargaTabla()
+        cargaTabla();
     });
 
+    // Botón "Vaciar Datos": limpia filtros, orden, tabla y contador
     $("#vaciar").click(function () {
-    // Limpiar todos los inputs de texto
-    $("#filterID").val('');
-    $("#filterNombre").val('');
-    $("#filterArtista").val('');
-    $("#filterFecha").val('');
-
-    // Dejar el select de género en la opción por defecto
-    $("#filterGenero").val('');
-
-    // Limpiar el input de orden
-    $("#order").val('');
-
-    // Limpiar la tabla de datos
-    $("#tbDatos").empty();
-
-    // Limpiar el número total de registros
-    $("#totalRegistros").text('');
-});
-    
-    $(document).ready(function () {
-        $("#btnID").click(function () {
-            $("#order").val("ID");
-        });
-        $("#btnNombre").click(function () {
-            $("#order").val("nombre");
-        });
-        $("#btnGenero").click(function () {
-            $("#order").val("genero_id");
-        });
-        $("#btnArtista").click(function () {
-            $("#order").val("artista");
-        });
-        $("#btnFecha").click(function () {
-            $("#order").val("fecha_estreno");
-        });
+        $("#filterNroOrden").val('');
+        $("#filterCodigo").val('');
+        $("#filterDescripcion").val('');
+        $("#filterUnidad").val('');
+        $("#order").val('');
+        $("#tbDatos").empty();
+        $("#totalRegistros").text('');
     });
-    
 </script>
 
 </html>

@@ -323,3 +323,10 @@ input:focus {
         height: 200px; /* Ajustar la altura del tbody */
     }
 }
+
+.thumb {
+    max-width: 60px;
+    max-height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
