@@ -2,6 +2,7 @@
 // Devuelve en JSON los renglones de órdenes de compra, aplicando filtros y orden.
 // Lo llama index.php por AJAX al presionar "Cargar Datos".
 include ("./db.php"); // trae $host, $dbname, $user, $password
+include ("./log.php"); // trae registrarError() para escribir en errores.log
 
 // ---- 1. Conexión a la base ----
 try {
@@ -10,6 +11,7 @@ try {
     // Que PDO lance excepciones si hay un error SQL
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e) {
+    registrarError("Error de conexión: " . $e->getMessage());
     echo json_encode(["error" => "Error de conexión: " . $e->getMessage()]);
     exit;
 }
@@ -110,7 +112,8 @@ try {
     echo json_encode($objRenglones);
 
 } catch (PDOException $e) {
-    // Si falla la consulta, devolver el error en JSON
+    // Si falla la consulta, anotarlo en errores.log y devolver el error en JSON
+    registrarError("Error en la consulta SQL: " . $e->getMessage());
     echo json_encode(["error" => "Error en la consulta SQL: " . $e->getMessage()]);
     exit;
 }

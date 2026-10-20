@@ -2,6 +2,7 @@
 // Devuelve en JSON las unidades de medida para llenar el desplegable (select) del filtro.
 // Lo llama index.php por AJAX al cargar la página.
 include ("./db.php"); // trae $host, $dbname, $user, $password
+include ("./log.php"); // trae registrarError() para escribir en errores.log
 
 try {
     // 1. Conectar a la base con PDO
@@ -29,7 +30,8 @@ try {
     echo json_encode($objUnidades);
 
 } catch(PDOException $e) {
-    // Si algo falla, avisar al navegador con un JSON de error
+    // Si algo falla, anotarlo en errores.log y avisar al navegador con un JSON de error
+    registrarError("Error: " . $e->getMessage());
     echo json_encode(["error" => "Error: " . $e->getMessage()]);
 }
 $conn = null; // cerrar la conexión

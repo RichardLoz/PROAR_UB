@@ -81,7 +81,7 @@ footer {
     padding: 10px;
 }
 
-/* Ajustar la tabla para que se alinee correctamente */
+/* Tabla: thead y tfoot quedan fijos y solo el tbody tiene scroll vertical (ver tbody más abajo) */
 table {
     width: 100%;
     max-width: 100%;
@@ -178,56 +178,54 @@ input:focus {
     border: 1px solid #00FFB2;
 }
 
+/* Animación "Esperando respuesta...": una caja que avanza por una cinta transportadora (solo CSS, sin imagen).
+   Se usa en index.php dentro del tbody mientras el servidor responde (el PHP hace sleep(3)). */
 .loader {
-    width: 175px;
-    height: 80px;
+    width: 200px;
+    height: 70px;
     display: block;
     margin: auto;
-    background-image: radial-gradient(circle 25px at 25px 25px, #FFF 100%, transparent 0), radial-gradient(circle 50px at 50px 50px, #FFF 100%, transparent 0), radial-gradient(circle 25px at 25px 25px, #FFF 100%, transparent 0), linear-gradient(#FFF 50px, transparent 0);
-    background-size: 50px 50px, 100px 76px, 50px 50px, 120px 40px;
-    background-position: 0px 30px, 37px 0px, 122px 30px, 25px 40px;
-    background-repeat: no-repeat;
     position: relative;
+    overflow: hidden; /* la caja entra y sale sin salirse del recuadro */
+}
+
+/* La caja de cartón con su cinta adhesiva al medio */
+.loader::before {
+    content: '';
+    position: absolute;
+    bottom: 12px;
+    left: -45px;
+    width: 40px;
+    height: 34px;
     box-sizing: border-box;
-  }
-  .loader::after {
-    content: '';  
-    left: 50%;
+    border: 2px solid #8A5A2B;
+    border-radius: 3px;
+    background: linear-gradient(90deg, transparent 15px, #E8D3A8 15px, #E8D3A8 21px, transparent 21px), #C68642;
+    animation: cajaAvanza 1.6s linear infinite;
+}
+
+/* La cinta transportadora: franjas que se desplazan */
+.loader::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
     bottom: 0;
-    transform: translate(-50%, 0);
-    position: absolute;
-    border: 15px solid transparent;
-    border-top-color: #FF3D00;
-    box-sizing: border-box;
-    animation: fadePush 1s linear infinite;
-  }
-  .loader::before {
-    content: '';  
-    left: 50%;
-    bottom: 30px;
-    transform: translate(-50%, 0);
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background: #FF3D00;
-    box-sizing: border-box;
-    animation: fadePush 1s linear infinite;
-  }
-  
-  @keyframes fadePush {
-    0% {
-      transform: translate(-50%, -15px);
-      opacity: 0;
-    }
-    50% {
-      transform: translate(-50%, 0px);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(-50%, 15px);
-      opacity: 0;
-    }
-  }
+    height: 12px;
+    border-radius: 6px;
+    background: repeating-linear-gradient(90deg, #555 0 14px, #333 14px 28px);
+    animation: cintaMueve 0.5s linear infinite;
+}
+
+@keyframes cajaAvanza {
+    from { transform: translateX(0); }
+    to   { transform: translateX(250px); }
+}
+
+@keyframes cintaMueve {
+    from { background-position: 0 0; }
+    to   { background-position: 28px 0; }
+}
 
   @media (max-width: 768px) {
     /* Ajuste para pantallas pequeñas como tablets */
@@ -329,4 +327,22 @@ input:focus {
     max-height: 60px;
     object-fit: cover;
     border-radius: 4px;
+}
+
+/* Columnas (mismo orden en thead, filtros, tbody y tfoot):
+   1 Nro. Orden | 2 Código | 3 Descripción | 4 Cantidad | 5 Unidad | 6 Precio | 7 Importe | 8 Fecha | 9 Comprobante
+   Al achicar la ventana se ocultan las menos importantes para que la tabla no se deforme. */
+@media (max-width: 900px) {
+    th:nth-child(2), td:nth-child(2),   /* Código */
+    th:nth-child(6), td:nth-child(6),   /* Precio unitario */
+    th:nth-child(9), td:nth-child(9) {  /* Comprobante */
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    th:nth-child(4), td:nth-child(4),   /* Cantidad */
+    th:nth-child(8), td:nth-child(8) {  /* Fecha */
+        display: none;
+    }
 }

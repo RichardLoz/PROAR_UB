@@ -90,6 +90,8 @@
             url: './desplegables.php',
             type: 'GET',
             success: function (response) {
+                // Requerimiento de la consigna: mostrar el JSON de unidades apenas llega
+                alert("Llegó el JSON de unidades de medida:\n" + response);
                 // El servidor responde texto JSON; se convierte a objeto
                 var unidadesJson = JSON.parse(response);
                 var select = $('#filterUnidad');
@@ -115,22 +117,30 @@
 
     // Pide los renglones al servidor (con filtros y orden) y dibuja la tabla
     function cargaTabla() {
+        // Parámetros que viajan por GET al PHP
+        var datos = {
+            orden: $("#order").val(),
+            filterNroOrden: $("#filterNroOrden").val(),
+            filterCodigo: $("#filterCodigo").val(),
+            filterDescripcion: $("#filterDescripcion").val(),
+            filterFecha: $("#filterFecha").val(),
+            filterUnidad: $("#filterUnidad").val()
+        };
+
+        // Requerimiento de la consigna: mostrar lo que se va a enviar antes de disparar el AJAX
+        // $.param arma el texto de URL: orden=...&filterNroOrden=...&...
+        alert("Se dispara el requerimiento con estos datos:\n" + $.param(datos));
+
         $("#tbDatos").html("<p>Esperando respuesta... <span class='loader'></span></p>");
 
         $.ajax({
             type: "GET",
             url: "./renglonesJSONPrepare.php",
-            // Parámetros que viajan por GET al PHP
-            data: {
-                orden: $("#order").val(),
-                filterNroOrden: $("#filterNroOrden").val(),
-                filterCodigo: $("#filterCodigo").val(),
-                filterDescripcion: $("#filterDescripcion").val(),
-                filterFecha: $("#filterFecha").val(),
-                filterUnidad: $("#filterUnidad").val()
-            },
+            data: datos,
             // Si el servidor responde bien:
             success: function (respuestaDelServer) {
+                // Requerimiento de la consigna: mostrar el JSON recibido antes de poblar la tabla
+                alert("Llegó el JSON de renglones:\n" + respuestaDelServer);
                 $("#tbDatos").empty();
                 var objJson = JSON.parse(respuestaDelServer);
                 // Si el PHP devolvió un error, mostrarlo y cortar
@@ -140,10 +150,8 @@
                 }
                 // Por cada renglón se crea una fila <tr> y se agrega a la tabla
                 objJson.renglones.forEach(function (r) {
-                    // Link al comprobante (pdf o imagen guardado en la base); "-" si no tiene
-                    var comprobante = r.TienePdf
-                        ? "<a href='./verComprobante.php?id=" + encodeURIComponent(r.Id) + "' target='_blank'>Ver</a>"
-                        : "-";
+                    // El binario no viaja en el JSON: solo se indica si el renglón tiene comprobante cargado
+                    var comprobante = r.TienePdf ? "Sí" : "-";
                     var row = document.createElement("tr");
                     row.innerHTML = `
                     <td campo-dato='nro_orden'> ${esc(r.NroOrden)} </td>
