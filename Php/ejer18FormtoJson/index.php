@@ -1,5 +1,4 @@
 <?php
-// Un solo archivo para los dos tipos de envio:
 //  - AJAX: devuelve solo el JSON (con delay de 3 segundos para ver el loader)
 //  - Tradicional: muestra una pagina HTML con el JSON
 

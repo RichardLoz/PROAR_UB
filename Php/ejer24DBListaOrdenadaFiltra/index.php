@@ -35,7 +35,8 @@
                 <th campo-dato='cod_unidad'><button id="btnUnidad">Unidad de Medida</button></th>
                 <th campo-dato='precio_unitario'><button id="btnPrecio">Precio Unitario</button></th>
                 <th campo-dato='importe_renglon'><button id="btnImporte">Importe Renglón</button></th>
-                <th>Imagen</th>
+                <th campo-dato='fecha_orden'><button id="btnFecha">Fecha</button></th>
+                <th>Comprobante</th>
             </tr>
             <!-- Fila de filtros: texto para nro/código/descripción y desplegable para unidad -->
             <tr id="FiltrosTR">
@@ -48,6 +49,7 @@
                     </select></td>
                 <td></td>
                 <td></td>
+                <td><input type="text" id="filterFecha" placeholder="AAAA-MM-DD"></td>
                 <td></td>
             </tr>
         </thead>
@@ -61,7 +63,8 @@
             <th>Unidad de Medida</th>
             <th>Precio Unitario</th>
             <th>Importe Renglón</th>
-            <th>Imagen</th>
+            <th>Fecha</th>
+            <th>Comprobante</th>
         </tfoot>
     </table>
     <!-- Pie: cantidad de registros mostrados -->
@@ -107,6 +110,7 @@
         $("#btnUnidad").click(function () { $("#order").val("cod_unidad"); });
         $("#btnPrecio").click(function () { $("#order").val("precio_unitario"); });
         $("#btnImporte").click(function () { $("#order").val("importe_renglon"); });
+        $("#btnFecha").click(function () { $("#order").val("fecha_orden"); });
     });
 
     // Pide los renglones al servidor (con filtros y orden) y dibuja la tabla
@@ -122,6 +126,7 @@
                 filterNroOrden: $("#filterNroOrden").val(),
                 filterCodigo: $("#filterCodigo").val(),
                 filterDescripcion: $("#filterDescripcion").val(),
+                filterFecha: $("#filterFecha").val(),
                 filterUnidad: $("#filterUnidad").val()
             },
             // Si el servidor responde bien:
@@ -135,9 +140,9 @@
                 }
                 // Por cada renglón se crea una fila <tr> y se agrega a la tabla
                 objJson.renglones.forEach(function (r) {
-                    // Miniatura de la imagen del producto (clic = abrir en grande); "-" si no tiene
-                    var img = r.PdfImagen
-                        ? "<a href='" + esc(r.PdfImagen) + "' target='_blank'><img src='" + esc(r.PdfImagen) + "' alt='" + esc(r.CodigoProducto) + "' class='thumb'></a>"
+                    // Link al comprobante (pdf o imagen guardado en la base); "-" si no tiene
+                    var comprobante = r.TienePdf
+                        ? "<a href='./verComprobante.php?id=" + encodeURIComponent(r.Id) + "' target='_blank'>Ver</a>"
                         : "-";
                     var row = document.createElement("tr");
                     row.innerHTML = `
@@ -148,7 +153,8 @@
                     <td campo-dato='unidad'> ${esc(r.Unidad)} </td>
                     <td campo-dato='precio_unitario'> ${formatoMoneda(r.PrecioUnitario)} </td>
                     <td campo-dato='importe_renglon'> ${formatoMoneda(r.ImporteRenglon)} </td>
-                    <td campo-dato='pdf_imagen'> ${img} </td>`;
+                    <td campo-dato='fecha_orden'> ${esc(r.FechaOrden)} </td>
+                    <td campo-dato='pdf_comprobante'> ${comprobante} </td>`;
                     $("#tbDatos").append(row);
                 });
                 $("#totalRegistros").html("Nro de registros: " + objJson.cuenta);
@@ -171,6 +177,7 @@
         $("#filterNroOrden").val('');
         $("#filterCodigo").val('');
         $("#filterDescripcion").val('');
+        $("#filterFecha").val('');
         $("#filterUnidad").val('');
         $("#order").val('');
         $("#tbDatos").empty();

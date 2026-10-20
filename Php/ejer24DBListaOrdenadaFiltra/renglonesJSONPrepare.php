@@ -29,6 +29,7 @@ $ordenesPermitidos = [
     'cod_unidad'      => 'r.cod_unidad',
     'precio_unitario' => 'r.precio_unitario',
     'importe_renglon' => 'r.importe_renglon',
+    'fecha_orden'     => 'r.fecha_orden',
 ];
 $orden = isset($_GET["orden"]) ? strtolower($_GET["orden"]) : '';
 // Si el valor no está en la lista (o viene vacío), se usa el orden por defecto
@@ -39,21 +40,26 @@ $orden = $ordenesPermitidos[$orden] ?? 'r.nro_orden, r.id';
 $filterNroOrden = '%' . ($_GET['filterNroOrden'] ?? '') . '%';
 $filterCodigo = '%' . ($_GET['filterCodigo'] ?? '') . '%';
 $filterDescripcion = '%' . ($_GET['filterDescripcion'] ?? '') . '%';
+$filterFecha = '%' . ($_GET['filterFecha'] ?? '') . '%';
 $filterUnidad = $_GET['filterUnidad'] ?? ''; // el de unidad es exacto (viene de un select)
 
 try {
     // ---- 4. Consulta SQL ----
     // LEFT JOIN: trae la descripción de la unidad desde unidades_medida
     // Los :NombreParametro se reemplazan de forma segura más abajo (bindParam)
-    $sql = "SELECT r.nro_orden, r.codigo_producto, r.descripcion, r.cantidad,
+    // No se trae el binario (LONGBLOB) en el JSON: solo se avisa si existe (tiene_pdf).
+    // El archivo se pide aparte con verComprobante.php?id=...
+    $sql = "SELECT r.id, r.nro_orden, r.codigo_producto, r.descripcion, r.cantidad,
                    r.cod_unidad, IFNULL(u.descripcion, '') AS unidad_desc,
-                   r.precio_unitario, r.importe_renglon, r.pdf_imagen
+                   r.precio_unitario, r.importe_renglon, r.fecha_orden,
+                   (r.pdf_comprobante IS NOT NULL) AS tiene_pdf
             FROM renglones_orden_compra r
             LEFT JOIN unidades_medida u ON r.cod_unidad = u.cod_unidad
             WHERE
                 r.nro_orden LIKE :NroOrden AND
                 r.codigo_producto LIKE :Codigo AND
-                r.descripcion LIKE :Descripcion";
+                r.descripcion LIKE :Descripcion AND
+                r.fecha_orden LIKE :Fecha";
 
     // El filtro de unidad solo se agrega si el usuario eligió una
     if (!empty($filterUnidad)) {
@@ -69,6 +75,7 @@ try {
     $stmt2->bindParam(':NroOrden', $filterNroOrden);
     $stmt2->bindParam(':Codigo', $filterCodigo);
     $stmt2->bindParam(':Descripcion', $filterDescripcion);
+    $stmt2->bindParam(':Fecha', $filterFecha);
     if (!empty($filterUnidad)) {
         $stmt2->bindParam(':Unidad', $filterUnidad);
     }
@@ -80,6 +87,7 @@ try {
     $renglones = [];
     while ($fila = $stmt2->fetch()) {
         $objRenglon = new stdClass();
+        $objRenglon->Id = $fila['id'];
         $objRenglon->NroOrden = $fila['nro_orden'];
         $objRenglon->CodigoProducto = $fila['codigo_producto'];
         $objRenglon->Descripcion = $fila['descripcion'];
@@ -88,7 +96,8 @@ try {
         $objRenglon->Unidad = $fila['cod_unidad'] . ' ' . $fila['unidad_desc'];
         $objRenglon->PrecioUnitario = $fila['precio_unitario'];
         $objRenglon->ImporteRenglon = $fila['importe_renglon']; // cantidad * precio (calculado en la base)
-        $objRenglon->PdfImagen = $fila['pdf_imagen'];           // ruta de la imagen del producto
+        $objRenglon->FechaOrden = $fila['fecha_orden'];
+        $objRenglon->TienePdf = (bool) $fila['tiene_pdf'];      // true si hay comprobante guardado
         array_push($renglones, $objRenglon);
     }
 
